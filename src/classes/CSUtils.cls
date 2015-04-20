@@ -386,4 +386,13 @@ public with sharing class CSUtils {
 		Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
 	}
 
+	/**
+	 * returns day of week as a string ('Monday', 'Tuesday', etc)
+	 */
+
+	 public static String dayOfWeek(Date d) {
+		Datetime dt = DateTime.newInstance(d.year(), d.month(), d.day());
+		return dt.format('EEEE'); 
+	}
+
 }
