@@ -251,7 +251,7 @@ private class CSUtilsTest {
 		CSUtils.sendEmail(new List<String>{'test@test.com'}, 'test', 'test message');
 	}
 
-	static testMethod void test_TimecardUtil_dayOfWeek() {
+	static testMethod void testDayOfWeek() {
 		system.assertEquals('Monday', CSUtils.dayOfWeek('3/23/2015') );
 		system.assertEquals('Tuesday', CSUtils.dayOfWeek('3/24/2015') );
 		system.assertEquals('Wednesday', CSUtils.dayOfWeek('3/25/2015') );
