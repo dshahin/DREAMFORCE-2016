@@ -252,13 +252,13 @@ private class CSUtilsTest {
 	}
 
 	static testMethod void testDayOfWeek() {
-		system.assertEquals('Monday', CSUtils.dayOfWeek('3/23/2015') );
-		system.assertEquals('Tuesday', CSUtils.dayOfWeek('3/24/2015') );
-		system.assertEquals('Wednesday', CSUtils.dayOfWeek('3/25/2015') );
-		system.assertEquals('Thursday', CSUtils.dayOfWeek('3/26/2015') );
-		system.assertEquals('Friday', CSUtils.dayOfWeek('3/27/2015') );
-		system.assertEquals('Saturday', CSUtils.dayOfWeek('3/28/2015') );
-		system.assertEquals('Sunday', CSUtils.dayOfWeek('3/29/2015') );
+		system.assertEquals('Monday', CSUtils.dayOfWeek(date.parse('3/23/2015')) );
+		system.assertEquals('Tuesday', CSUtils.dayOfWeek(date.parse('3/24/2015')) );
+		system.assertEquals('Wednesday', CSUtils.dayOfWeek(date.parse('3/25/2015')) );
+		system.assertEquals('Thursday', CSUtils.dayOfWeek(date.parse('3/26/2015')) );
+		system.assertEquals('Friday', CSUtils.dayOfWeek(date.parse('3/27/2015')) );
+		system.assertEquals('Saturday', CSUtils.dayOfWeek(date.parse('3/28/2015')) );
+		system.assertEquals('Sunday', CSUtils.dayOfWeek(date.parse('3/29/2015')) );
 	}
 
 }
