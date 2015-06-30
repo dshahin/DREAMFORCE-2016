@@ -3,5 +3,5 @@ machine:
     version: oraclejdk8
 test:
   override:
-    - ant -lib lib/ Build: 
+    - ant -lib lib/ -buildfile build/build.xml Build: 
         timeout: 600
