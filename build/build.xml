@@ -43,7 +43,7 @@
 			maxPoll="${sf.maxPoll}" 
 			deployRoot="${user.dir}/src" 
 			logType="${env.SF_LOGDETAIL}"
-			runallTests="${sf.runallTests}" />
+			testLevel="${sf.testLevel}" />
 	</target>
 	
 	<!--
