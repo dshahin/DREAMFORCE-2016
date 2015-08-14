@@ -408,5 +408,9 @@
         <members>*</members>
         <name>Workflow</name>
     </types>
-    <version>29.0</version>
+    <types>
+        <members>*</members>
+        <name>CustomMetadata</name>
+    </types>
+    <version>34.0</version>
 </Package>
