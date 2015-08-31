@@ -8,8 +8,20 @@
 		<taskdef resource="net/sf/antcontrib/antlib.xml" />
 		<property environment="env" />
 		<echo>Branch: ${env.CIRCLE_BRANCH}</echo>
-		<property file="build.${env.CIRCLE_BRANCH}.properties" />
-		<echo>${build.cmd}</echo>
+		
+		<if>
+		        <available file="build.${env.CIRCLE_BRANCH}.properties"/>
+		        <then>
+				<property file="build.${env.CIRCLE_BRANCH}.properties" />
+			</then>
+			<else>
+				<property file="build.properties" />
+				<var name="sf.username" value="$${env.${env.CIRCLE_BRANCH}_USERNAME}"/>
+				<var name="sf.password" value="$${env.${env.CIRCLE_BRANCH}_PASSWD}"/>
+			</else>
+		</if>
+		<echo>Build Cmd: ${build.cmd}</echo>
+		<echo>SF User: ${sf.username}</echo>
 		<antcall target="${build.cmd}" />
 	</target>
 	
