@@ -8,8 +8,31 @@
 		<taskdef resource="net/sf/antcontrib/antlib.xml" />
 		<property environment="env" />
 		<echo>Branch: ${env.CIRCLE_BRANCH}</echo>
-		<property file="build.${env.CIRCLE_BRANCH}.properties" />
-		<echo>${build.cmd}</echo>
+		
+		<if>
+		        <available file="build.${env.CIRCLE_BRANCH}.properties"/>
+		        <then>
+				<property file="build.${env.CIRCLE_BRANCH}.properties" />
+			</then>
+			<else>
+				<property file="build.properties" />
+				
+				<!-- remove "." and "-" from the branch name.
+				Env.Properties cannot have these chars -->
+				<propertyregex property="branch_clean"
+			              input="${env.CIRCLE_BRANCH}"
+			              regexp="[\.\-]"
+			              replace="_"
+			              defaultValue="${env.CIRCLE_BRANCH}"
+			              global="true"
+			              casesensitive="false" />
+			        <!-- echo>Branch Clean: ${branch_clean}</echo -->
+				<var name="sf.username" value="$${env.${branch_clean}_USERNAME}"/>
+				<var name="sf.password" value="$${env.${branch_clean}_PASSWD}"/>
+			</else>
+		</if>
+		<echo>SF User: ${sf.username}</echo>
+		<echo>Build Cmd: ${build.cmd}</echo>
 		<antcall target="${build.cmd}" />
 	</target>
 	
