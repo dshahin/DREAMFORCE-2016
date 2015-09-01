@@ -373,6 +373,9 @@ project.setProperty("downgradePackage", result);
           	<case value="customMetadata">
               <property name="typename" value="CustomMetadata" />
             </case>
+          	<case value="customPermissions">
+              <property name="typename" value="CustomPermission" />
+            </case>
             <default/>
           </switch>
 
