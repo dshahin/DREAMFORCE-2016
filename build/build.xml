@@ -16,12 +16,23 @@
 			</then>
 			<else>
 				<property file="build.properties" />
-				<var name="sf.username" value="$${env.${env.CIRCLE_BRANCH}_USERNAME}"/>
-				<var name="sf.password" value="$${env.${env.CIRCLE_BRANCH}_PASSWD}"/>
+				
+				<!-- remove "." and "-" from the branch name.
+				Env.Properties cannot have these chars -->
+				<propertyregex property="branch_clean"
+			              input="${env.CIRCLE_BRANCH}"
+			              regexp="[\.\-]"
+			              replace="_"
+			              defaultValue="${env.CIRCLE_BRANCH}"
+			              global="true"
+			              casesensitive="false" />
+			        <!-- echo>Branch Clean: ${branch_clean}</echo -->
+				<var name="sf.username" value="$${env.${branch_clean}_USERNAME}"/>
+				<var name="sf.password" value="$${env.${branch_clean}_PASSWD}"/>
 			</else>
 		</if>
-		<echo>Build Cmd: ${build.cmd}</echo>
 		<echo>SF User: ${sf.username}</echo>
+		<echo>Build Cmd: ${build.cmd}</echo>
 		<antcall target="${build.cmd}" />
 	</target>
 	
