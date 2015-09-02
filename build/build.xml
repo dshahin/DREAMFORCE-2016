@@ -33,7 +33,62 @@
 		</if>
 		<echo>SF User: ${sf.username}</echo>
 		<echo>Build Cmd: ${build.cmd}</echo>
+		
+		<antcall target="UpdateMetaData" />
 		<antcall target="${build.cmd}" />
+	</target>
+	
+	<target name="UpdateMetaData">
+		<propertyselector property="src.configs"
+                        delimiter=","
+                        match="(src\..*)"
+                        select="\1"
+                        casesensitive="false" />
+                <echo>Updating MetaData: ${src.configs}</echo>
+                <for list="${src.configs}" param="metadata.propertyName" delimiter=",">
+                	<sequential>
+	                	<propertycopy property="metadata.propertyValue" from="@{metadata.propertyName}" silent="true" override="true" />
+	                	<echo>@{metadata.propertyName} == ${metadata.propertyValue}</echo>
+	                	
+	                	<propertyregex property="metadata.folder"
+			              input="@{metadata.propertyName}"
+			              regexp="src\.([^\.]+)\..+"
+			              select="\1"
+			              casesensitive="false"
+			              override="true" />
+	                	<echo>metadata.folder == ${metadata.folder}</echo>
+	                	
+	                	<propertyregex property="metadata.file"
+			              input="@{metadata.propertyName}"
+			              regexp="src\.${metadata.folder}\.([^\.]+)\..+"
+			              select="\1"
+			              casesensitive="false"
+			              override="true" />
+	                	<echo>metadata.file == ${metadata.file}</echo>
+	                	
+	                	<propertyregex property="metadata.type"
+			              input="@{metadata.propertyName}"
+			              regexp="src\.${metadata.folder}\.${metadata.file}\.([^\.]+)\..+"
+			              select="\1"
+			              casesensitive="false"
+			              override="true" />
+	                	<echo>metadata.type == ${metadata.type}</echo>
+	                	
+	                	<propertyregex property="metadata.element"
+			              input="@{metadata.propertyName}"
+			              regexp="src\.${metadata.folder}\.${metadata.file}\.${metadata.type}\.([^\.]+)"
+			              select="\1"
+			              casesensitive="false"
+			              override="true" />
+	                	<echo>metadata.element == ${metadata.element}</echo>
+	                	
+	                	<replaceregexp file="../src/${metadata.folder}/${metadata.file}.${metadata.type}"
+					match="((?&lt;=${metadata.element}\&gt;).*?(?=\&lt;\/${metadata.element}))"
+					replace="${metadata.propertyValue}"
+					byline="true" />
+	                	
+                	</sequential>
+                </for>
 	</target>
 	
 	<!--
