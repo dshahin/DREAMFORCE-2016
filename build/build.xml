@@ -10,8 +10,8 @@
 		<echo>Branch: ${env.CIRCLE_BRANCH}</echo>
 		
 		<if>
-		        <available file="build.${env.CIRCLE_BRANCH}.properties"/>
-		        <then>
+				<available file="build.${env.CIRCLE_BRANCH}.properties"/>
+				<then>
 				<property file="build.${env.CIRCLE_BRANCH}.properties" />
 			</then>
 			<else>
@@ -20,13 +20,13 @@
 				<!-- remove "." and "-" from the branch name.
 				Env.Properties cannot have these chars -->
 				<propertyregex property="branch_clean"
-			              input="${env.CIRCLE_BRANCH}"
-			              regexp="[\.\-]"
-			              replace="_"
-			              defaultValue="${env.CIRCLE_BRANCH}"
-			              global="true"
-			              casesensitive="false" />
-			        <!-- echo>Branch Clean: ${branch_clean}</echo -->
+						  input="${env.CIRCLE_BRANCH}"
+						  regexp="[\.\-]"
+						  replace="_"
+						  defaultValue="${env.CIRCLE_BRANCH}"
+						  global="true"
+						  casesensitive="false" />
+					<!-- echo>Branch Clean: ${branch_clean}</echo -->
 				<var name="sf.username" value="$${env.${branch_clean}_USERNAME}"/>
 				<var name="sf.password" value="$${env.${branch_clean}_PASSWD}"/>
 			</else>
@@ -34,61 +34,88 @@
 		<echo>SF User: ${sf.username}</echo>
 		<echo>Build Cmd: ${build.cmd}</echo>
 		
+		<antcall target="cleanProfilesPermSets" />
 		<antcall target="UpdateMetaData" />
 		<antcall target="${build.cmd}" />
 	</target>
 	
 	<target name="UpdateMetaData">
 		<propertyselector property="src.configs"
-                        delimiter=","
-                        match="(src\..*)"
-                        select="\1"
-                        casesensitive="false" />
-                <echo>Updating MetaData: ${src.configs}</echo>
-                <for list="${src.configs}" param="metadata.propertyName" delimiter=",">
-                	<sequential>
-	                	<propertycopy property="metadata.propertyValue" from="@{metadata.propertyName}" silent="true" override="true" />
-	                	<echo>@{metadata.propertyName} == ${metadata.propertyValue}</echo>
-	                	
-	                	<propertyregex property="metadata.folder"
-			              input="@{metadata.propertyName}"
-			              regexp="src\.([^\.]+)\..+"
-			              select="\1"
-			              casesensitive="false"
-			              override="true" />
-	                	<echo>metadata.folder == ${metadata.folder}</echo>
-	                	
-	                	<propertyregex property="metadata.file"
-			              input="@{metadata.propertyName}"
-			              regexp="src\.${metadata.folder}\.([^\.]+)\..+"
-			              select="\1"
-			              casesensitive="false"
-			              override="true" />
-	                	<echo>metadata.file == ${metadata.file}</echo>
-	                	
-	                	<propertyregex property="metadata.type"
-			              input="@{metadata.propertyName}"
-			              regexp="src\.${metadata.folder}\.${metadata.file}\.([^\.]+)\..+"
-			              select="\1"
-			              casesensitive="false"
-			              override="true" />
-	                	<echo>metadata.type == ${metadata.type}</echo>
-	                	
-	                	<propertyregex property="metadata.element"
-			              input="@{metadata.propertyName}"
-			              regexp="src\.${metadata.folder}\.${metadata.file}\.${metadata.type}\.([^\.]+)"
-			              select="\1"
-			              casesensitive="false"
-			              override="true" />
-	                	<echo>metadata.element == ${metadata.element}</echo>
-	                	
-	                	<replaceregexp file="../src/${metadata.folder}/${metadata.file}.${metadata.type}"
-					match="((?&lt;=${metadata.element}\&gt;).*?(?=\&lt;\/${metadata.element}))"
-					replace="${metadata.propertyValue}"
-					byline="true" />
-	                	
-                	</sequential>
-                </for>
+						delimiter=","
+						match="(src\..*)"
+						select="\1"
+						casesensitive="false" />
+		<echo>Updating MetaData: ${src.configs}</echo>
+		<for list="${src.configs}" param="metadata.propertyName" delimiter=",">
+			<sequential>
+				<propertycopy property="metadata.propertyValue" from="@{metadata.propertyName}" silent="true" override="true" />
+				<echo>@{metadata.propertyName} == ${metadata.propertyValue}</echo>
+				
+				<propertyregex property="metadata.folder"
+				  input="@{metadata.propertyName}"
+				  regexp="src\.([^\.]+)\..+"
+				  select="\1"
+				  casesensitive="false"
+				  override="true" />
+				<echo>metadata.folder == ${metadata.folder}</echo>
+				
+				<propertyregex property="metadata.file"
+				  input="@{metadata.propertyName}"
+				  regexp="src\.${metadata.folder}\.([^\.]+)\..+"
+				  select="\1"
+				  casesensitive="false"
+				  override="true" />
+				<echo>metadata.file == ${metadata.file}</echo>
+				
+				<propertyregex property="metadata.type"
+				  input="@{metadata.propertyName}"
+				  regexp="src\.${metadata.folder}\.${metadata.file}\.([^\.]+)\..+"
+				  select="\1"
+				  casesensitive="false"
+				  override="true" />
+				<echo>metadata.type == ${metadata.type}</echo>
+				
+				<propertyregex property="metadata.element"
+				  input="@{metadata.propertyName}"
+				  regexp="src\.${metadata.folder}\.${metadata.file}\.${metadata.type}\.([^\.]+)"
+				  select="\1"
+				  casesensitive="false"
+				  override="true" />
+				<echo>metadata.element == ${metadata.element}</echo>
+				
+				<replaceregexp file="../src/${metadata.folder}/${metadata.file}.${metadata.type}"
+			match="((?&lt;=${metadata.element}\&gt;).*?(?=\&lt;\/${metadata.element}))"
+			replace="${metadata.propertyValue}"
+			byline="true" />
+				
+			</sequential>
+		</for>
+	</target>
+
+	<target name="cleanProfilesPermSets">
+		<echo>Cleaning Profiles &amp; Permission Sets</echo>
+
+		<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+
+		<for param="file">
+			<path>
+				<fileset dir="../src/profiles" includes="*.profile"/>
+				<fileset dir="../src/permissionsets" includes="*.permissionset"/>
+			</path>
+			<sequential>
+				<echo>Cleaning file @{file}</echo>
+				<xmltask source="@{file}" dest="@{file}">
+					<remove path="//:applicationVisibilities[:enabled = 'false']"/>
+					<remove path="//:classAccesses[:enabled = 'false']"/>
+					<remove path="//:fieldPermissions[:editable = 'false' and :readable = 'false']"/>
+					<remove path="//:objectPermissions[:allowCreate = 'false' and :allowDelete = 'false' and :allowEdit = 'false' and :allowRead = 'false' and :modifyAllRecords = 'false' and :viewAllRecords = 'false']"/>
+					<remove path="//:pageAccesses[:enabled = 'false']"/>
+					<remove path="//:userPermissions[:enabled = 'false']"/>
+					<remove path="//:recordTypeVisibilities[:visible = 'false']"/>
+					<remove path="//:tabSettings[:visibility = 'None']"/>
+				</xmltask>
+			</sequential>
+		</for>
 	</target>
 	
 	<!--
@@ -212,9 +239,9 @@
 	-->
 	
 	<!-- updatePackageXml: Builds a new package.xml based upon the metadata in the src directory -->
-    <target name="updatePackageXml">
-        <buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src"/>
-    </target>
+	<target name="updatePackageXml">
+		<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src"/>
+	</target>
 
 	<!--
 		Destroys all meta-data in the target org that is not in the git repo.
