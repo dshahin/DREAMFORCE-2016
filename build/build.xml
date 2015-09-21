@@ -240,7 +240,34 @@
 	
 	<!-- updatePackageXml: Builds a new package.xml based upon the metadata in the src directory -->
 	<target name="updatePackageXml">
-		<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src"/>
+    	<if>
+    		<and>
+    			<isset property="sf.package.installClass" />
+    			<isset property="sf.package.uninstallClass" />
+    		</and>
+    		<then>
+        		<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" installClass="${sf.package.installClass}" uninstallClass="${sf.package.uninstallClass}" />
+        	</then>
+        	<else>
+        		<if>
+    				<isset property="sf.package.installClass" />
+    				<then>
+        				<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" installClass="${sf.package.installClass}" />
+        			</then>
+        			<else>
+        				<if>
+    						<isset property="sf.package.uninstallClass" />
+        					<then>
+        						<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" uninstallClass="${sf.package.uninstallClass}" />
+        					</then>
+        					<else>
+        						<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" />
+        					</else>
+        				</if>
+        			</else>
+        		</if>
+        	</else>
+        </if>
 	</target>
 
 	<!--
