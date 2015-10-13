@@ -40,6 +40,7 @@
 		<echo>Build Cmd: ${build.cmd}</echo>
 		
 		<antcall target="cleanProfilesPermSets" />
+		<antcall target="DeleteMetaData" />
 		<antcall target="UpdateMetaData" />
 		<antcall target="${build.cmd}" />
 	</target>
@@ -110,6 +111,60 @@
 				<echo>No MetaData to update from properties</echo>
 			</else>
 		</if>
+	</target>
+	
+	<target name="DeleteMetaData">
+		
+		<propertyselector property="del.configs"
+						delimiter=","
+						match="(del\..*)"
+						select="\1"
+						casesensitive="false" />
+		
+		<if> 
+			<not> 
+				<equals arg1="${del.configs}" arg2="$${del.configs}" /> 
+			</not> 
+			<then> 
+				<echo>Deleting MetaData: ${del.configs}</echo>
+						
+				<for list="${del.configs}" param="config.path" delimiter=",">
+					<sequential>
+						
+						<propertyregex property="metadata.folder"
+						  input="@{config.path}"
+						  regexp="del\.([^\.]+)\..+"
+						  select="\1"
+						  casesensitive="false"
+						  override="true" />
+						<echo>metadata.folder == ${metadata.folder}</echo>
+						
+						<propertyregex property="metadata.file"
+						  input="@{config.path}"
+						  regexp="del\.${metadata.folder}\.([^\.]+)\..+"
+						  select="\1"
+						  casesensitive="false"
+						  override="true" />
+						<echo>metadata.file == ${metadata.file}</echo>
+						
+						<propertyregex property="metadata.type"
+						  input="@{config.path}"
+						  regexp="del\.${metadata.folder}\.${metadata.file}\.([^\.]+)"
+						  select="\1"
+						  casesensitive="false"
+						  override="true" />
+						<echo>metadata.type == ${metadata.type}</echo>
+						
+						<delete file="../src/${metadata.folder}/${metadata.file}.${metadata.type}" verbose="true" quiet="false" />
+					</sequential>
+				</for>
+			</then> 
+			<else> 
+				<echo message="Delete Configs not Set, skipping." /> 
+			</else> 
+		</if>
+		
+		
 	</target>
 
 	<target name="cleanProfilesPermSets">
