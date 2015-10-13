@@ -303,7 +303,17 @@
 		<copy file="../src/package.xml" todir="${env.CIRCLE_ARTIFACTS}"/>
 			
 		<antcall target="DeployAndRunAllTests" />
-		<antcall target="destroyStaleMetadata" />
+		
+		<if>
+			<equals arg1="${sf.runDeleteScript}" arg2="false" />
+			<then>
+				<echo>Delete Script Suppressed via sf.runDeleteScript</echo>
+			</then>
+			<else>
+				<echo>Running Delete Script, sf.runDeleteScript value:  ${sf.runDeleteScript}</echo>
+				<antcall target="destroyStaleMetadata" />
+			</else>
+		</if>
 	</target>
 
 
