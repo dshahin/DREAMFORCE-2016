@@ -174,8 +174,8 @@
 
 		<for param="file">
 			<path>
-				<fileset dir="../src/profiles" includes="*.profile"/>
-				<fileset dir="../src/permissionsets" includes="*.permissionset"/>
+				<fileset dir="../src/profiles" includes="*.profile" erroronmissingdir="false"/>
+				<fileset dir="../src/permissionsets" includes="*.permissionset" erroronmissingdir="false"/>
 			</path>
 			<sequential>
 				<echo>Cleaning file @{file}</echo>
