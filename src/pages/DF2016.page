@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-        <title>Shopper Events</title>
+        <title>Dreamforce 2016</title>
 
         <apex:stylesheet value="{!URLFOR($Resource.df2016, '/assets/app.css')}"/>
 
@@ -69,9 +69,8 @@
                appLogoURL = '/assets/images/shopper-events-logo.png';
             }
 
-            configSettings = {
+            window.configSettings = {
                 staticPath: staticURL,
-                appLogoPath: appLogoURL,
                 config: {
                     logoutURL: '{!JSENCODE($Site.Prefix)}/secur/logout.jsp'
                 },
@@ -85,7 +84,11 @@
         <apex:includeScript value="{!URLFOR($Resource.df2016, '/bundle.js')}"/>
     </head>
     <body>
-        <div class="ui-view"></div>
+		<div class="container">
+	        <!-- //Header cmp -->
+	        <header name="Newell" foo="bar"></header>
+	        <ui-view></ui-view>
+	    </div>
     </body>
 </html>
 </apex:page>

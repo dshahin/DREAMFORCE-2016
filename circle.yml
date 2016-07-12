@@ -41,8 +41,8 @@ dependencies:
 
   # we automatically cache and restore many dependencies between
   # builds. If you need to, you can add custom paths to cache:
-  # cache_directories: # top level /home/ubuntu/CROSSMARK/node_modules is cached automatically
-    - "/home/ubuntu/CROSSMARK/spa/df2016/node_modules"   # cache the spa deps to speed up builds
+  cache_directories: # top level /home/ubuntu/CROSSMARK/node_modules is cached automatically
+    - "/home/ubuntu/DREAMFORCE-2016/spa/df2016/node_modules"   # cache the spa deps to speed up builds
 
 
 ## Customize test commands

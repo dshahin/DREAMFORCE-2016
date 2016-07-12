@@ -1,7 +1,7 @@
 routing.$inject = ['$urlRouterProvider', '$locationProvider', 'jsrMocksProvider'];
 
 export default function routing($urlRouterProvider, $locationProvider, jsrMocksProvider) {
-  $locationProvider.html5Mode(true);
+  $locationProvider.html5Mode(false);
   $urlRouterProvider.otherwise('/');
-  jsrMocksProvider.setMocks(configSettings.mocks, 'http://localhost:9000/');
+  jsrMocksProvider.setMocks(configSettings.mocks);
 }
