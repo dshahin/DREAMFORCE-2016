@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:sf="antlib:com.salesforce" default="Build" basedir=".">
+	
+	<include file="cumulusci.xml" />
+	
+	<target name="Build">
+		<echo>Continuous Integration Build</echo>
+		<taskdef resource="net/sf/antcontrib/antlib.xml" />
+		<property environment="env" />
+		<echo>Branch: ${env.CIRCLE_BRANCH}</echo>
+		
+		<if>
+			<available file="build.${env.CIRCLE_BRANCH}.properties"/>
+			<then>
+				<property file="build.${env.CIRCLE_BRANCH}.properties" />
+			</then>
+			<else>
+				<property file="build.properties" />
+				
+				<!-- remove "." and "-" from the branch name.
+				Env.Properties cannot have these chars -->
+				<propertyregex property="branch_clean"
+						  input="${env.CIRCLE_BRANCH}"
+						  regexp="[\.\-]"
+						  replace="_"
+						  defaultValue="${env.CIRCLE_BRANCH}"
+						  global="true"
+						  casesensitive="false" />
+				<echo>Branch Clean: ${branch_clean}</echo>
+
+				<upper to="branch_clean" string="${branch_clean}"/>
+
+				<echo>Branch Clean: ${branch_clean}</echo>
+
+				<var name="sf.username" value="$${env.${branch_clean}_USERNAME}"/>
+				<var name="sf.password" value="$${env.${branch_clean}_PASSWD}"/>
+			</else>
+		</if>
+		<echo>SF User: ${sf.username}</echo>
+		<echo>Build Cmd: ${build.cmd}</echo>
+		
+		<antcall target="cleanProfilesPermSets" />
+		<antcall target="DeleteMetaData" />
+		<antcall target="UpdateMetaData" />
+		<antcall target="${build.cmd}" />
+	</target>
+	
+	<scriptdef language="javascript" name="upper">
+		<attribute name="string" /> 
+    	<attribute name="to" />
+	    project.setProperty( attributes.get( "to" ),
+	                         attributes.get( "string" ).toUpperCase() );
+	</scriptdef>
+
+	<target name="UpdateMetaData">
+		<propertyselector property="src.configs"
+						delimiter=","
+						match="(src\..*)"
+						select="\1"
+						casesensitive="false" />
+		<if>
+			<isset property="${src.configs}" />
+			<then>
+				<echo>Updating MetaData: ${src.configs}</echo>
+				<for list="${src.configs}" param="metadata.propertyName" delimiter=",">
+					<sequential>
+						<propertycopy property="metadata.propertyValue" from="@{metadata.propertyName}" silent="true" override="true" />
+						<echo>@{metadata.propertyName} == ${metadata.propertyValue}</echo>
+						
+						<propertyregex property="metadata.folder"
+						  input="@{metadata.propertyName}"
+						  regexp="src\.([^\.]+)\..+"
+						  select="\1"
+						  casesensitive="false"
+						  override="true" />
+						<echo>metadata.folder == ${metadata.folder}</echo>
+						
+						<propertyregex property="metadata.file"
+						  input="@{metadata.propertyName}"
+						  regexp="src\.${metadata.folder}\.([^\.]+)\..+"
+						  select="\1"
+						  casesensitive="false"
+						  override="true" />
+						<echo>metadata.file == ${metadata.file}</echo>
+						
+						<propertyregex property="metadata.type"
+						  input="@{metadata.propertyName}"
+						  regexp="src\.${metadata.folder}\.${metadata.file}\.([^\.]+)\..+"
+						  select="\1"
+						  casesensitive="false"
+						  override="true" />
+						<echo>metadata.type == ${metadata.type}</echo>
+						
+						<propertyregex property="metadata.element"
+						  input="@{metadata.propertyName}"
+						  regexp="src\.${metadata.folder}\.${metadata.file}\.${metadata.type}\.([^\.]+)"
+						  select="\1"
+						  casesensitive="false"
+						  override="true" />
+						<echo>metadata.element == ${metadata.element}</echo>
+						
+						<replaceregexp file="../src/${metadata.folder}/${metadata.file}.${metadata.type}"
+					match="((?&lt;=${metadata.element}\&gt;).*?(?=\&lt;\/${metadata.element}))"
+					replace="${metadata.propertyValue}"
+					byline="true" />
+						
+					</sequential>
+				</for>
+			</then>
+			<else>
+				<echo>No MetaData to update from properties</echo>
+			</else>
+		</if>
+	</target>
+	
+	<target name="DeleteMetaData">
+		
+		<propertyselector property="del.configs"
+						delimiter=","
+						match="(del\..*)"
+						select="\1"
+						casesensitive="false" />
+		
+		<if> 
+			<not> 
+				<equals arg1="${del.configs}" arg2="$${del.configs}" /> 
+			</not> 
+			<then> 
+				<echo>Deleting MetaData: ${del.configs}</echo>
+						
+				<for list="${del.configs}" param="config.path" delimiter=",">
+					<sequential>
+						
+						<propertyregex property="metadata.folder"
+						  input="@{config.path}"
+						  regexp="del\.([^\.]+)\..+"
+						  select="\1"
+						  casesensitive="false"
+						  override="true" />
+						<echo>metadata.folder == ${metadata.folder}</echo>
+						
+						<propertyregex property="metadata.file"
+						  input="@{config.path}"
+						  regexp="del\.${metadata.folder}\.([^\.]+)\..+"
+						  select="\1"
+						  casesensitive="false"
+						  override="true" />
+						<echo>metadata.file == ${metadata.file}</echo>
+						
+						<propertyregex property="metadata.type"
+						  input="@{config.path}"
+						  regexp="del\.${metadata.folder}\.${metadata.file}\.([^\.]+)"
+						  select="\1"
+						  casesensitive="false"
+						  override="true" />
+						<echo>metadata.type == ${metadata.type}</echo>
+						
+						<delete file="../src/${metadata.folder}/${metadata.file}.${metadata.type}" verbose="true" quiet="false" />
+					</sequential>
+				</for>
+			</then> 
+			<else> 
+				<echo message="Delete Configs not Set, skipping." /> 
+			</else> 
+		</if>
+		
+		
+	</target>
+
+	<target name="cleanProfilesPermSets">
+		<echo>Cleaning Profiles &amp; Permission Sets</echo>
+
+		<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+
+		<for param="file">
+			<path>
+				<fileset dir="../src/profiles" includes="*.profile" erroronmissingdir="false"/>
+				<fileset dir="../src/permissionsets" includes="*.permissionset" erroronmissingdir="false"/>
+			</path>
+			<sequential>
+				<echo>Cleaning file @{file}</echo>
+				<xmltask source="@{file}" dest="@{file}">
+					<remove path="//:applicationVisibilities[:enabled = 'false']"/>
+					<remove path="//:classAccesses[:enabled = 'false']"/>
+					<remove path="//:fieldPermissions[:editable = 'false' and :readable = 'false']"/>
+					<remove path="//:objectPermissions[:allowCreate = 'false' and :allowDelete = 'false' and :allowEdit = 'false' and :allowRead = 'false' and :modifyAllRecords = 'false' and :viewAllRecords = 'false']"/>
+					<remove path="//:pageAccesses[:enabled = 'false']"/>
+					<remove path="//:userPermissions[:enabled = 'false']"/>
+					<remove path="//:recordTypeVisibilities[:visible = 'false']"/>
+					<remove path="//:tabSettings[:visibility = 'None']"/>
+				</xmltask>
+			</sequential>
+		</for>
+	</target>
+	
+	<!--
+		Tests that the deployment of meta-data to the target org will succeed
+		but does not *save* the meta-data. This is just for validating that the
+		deployment would succeed.
+	-->
+	<target name="DeployAndCheckOnly">
+		<echo>Deploy Code CheckOnly in Org with username: ${sf.username}</echo>
+		<sf:deploy 
+			username="${sf.username}" 
+			password="${sf.password}" 
+			serverurl="${sf.serverurl}" 
+			maxPoll="${sf.maxPoll}" 
+			deployRoot="${user.dir}/src" 
+			logType="${env.SF_LOGDETAIL}" 
+			checkOnly="${sf.checkOnly}" />
+	</target>
+	
+	<!--
+		Deploys the meta-data to the target org and then runs all unit tests. If
+		any unit tests fail, a roll-back will occurr and nothing will have changed.
+	-->
+	<target name="DeployAndRunAllTests">
+		<echo>Deploy and RunAllTests in Org with username: ${sf.username}</echo>
+		<echo>Logging Level:  ${env.SF_LOGDETAIL}</echo>
+		<echo>Test Level:  ${sf.testLevel}</echo>
+		<sf:deploy 
+			username="${sf.username}" 
+			password="${sf.password}" 
+			serverurl="${sf.serverurl}" 
+			maxPoll="${sf.maxPoll}" 
+			deployRoot="${user.dir}/src" 
+			logType="${env.SF_LOGDETAIL}"
+			testLevel="${sf.testLevel}" />
+	</target>
+	
+	<!--
+		Deploys the meta-data to the target org and then runs all unit tests. If
+		any unit tests fail, a roll-back will occurr and nothing will have changed.
+	-->
+	<target name="DeployWithoutTests">
+		<echo>Deploy without running tests in Org with username: ${sf.username}</echo>
+		<sf:deploy 
+			username="${sf.username}" 
+			password="${sf.password}" 
+			serverurl="${sf.serverurl}" 
+			maxPoll="${sf.maxPoll}" 
+			deployRoot="${user.dir}/src" 
+			logType="${env.SF_LOGDETAIL}"
+			runallTests="false" />
+	</target>
+
+	<!--
+		Performs a full deploy to the target org and destroys any stale meta-data in the
+		target org that's not in the Git Repo, and then runs tests.
+	-->
+	<target name="DeployAndDestroyStale">
+		<echo>Deploy and Destroy Stale in Org with username: ${sf.username}</echo>
+		
+		<!-- Attempt to destroy any stale metadata but continue even if this fails -->
+		<trycatch>
+			<try>
+				<antcall target="destroyStaleMetadata" />
+			</try>
+			<catch>
+				<echo>First run of destroyStaleMetadata failed.  Ignoring for now but it may cause build failures in other targets.</echo>
+			</catch>
+		</trycatch>
+
+		<!-- Deploy src directory -->
+		<antcall target="DeployWithoutTests" />
+
+		<!-- Delete any metadata from the org which is not in the repo -->
+		<antcall target="destroyStaleMetadata" />
+
+		<!-- Run all Tests -->
+		<antcall target="DeployAndRunAllTests" />
+	</target>
+	
+	<!--
+		Retrieves meta-data for the named packaged from the target org.
+	-->
+	<target name="RetrievePackagedToSrc">
+		<property environment="env" />
+		<property file="build.properties" />
+		<echo>Retrieve a package from salesforce to your local src folder. An alternate to Mavens/Eclipse "Refresh from server..."</echo>
+		<echo>User: ${sf.username}</echo>
+		<echo>Package: ${sf.package.name}</echo>
+		<sf:retrieve 
+			username="${sf.username}" 
+			password="${sf.password}" 
+			serverurl="${sf.serverurl}" 
+			retrieveTarget="src" 
+			packageNames="${sf.package.name}"/>
+	</target>
+
+	<!-- 
+		There's really no point in running this in CircleCI unless we can do something with the output
+	-->
+	<target name="SfApexDoc">
+		<java fork="true" jar="${user.dir}/lib/SfApexDoc.jar" failonerror="true">
+			<arg line="-d -s ${user.dir}/src/classes -t ${user.dir}/docs -a ${user.dir}/SfApexDocAuthor.txt -h ${user.dir}/SfApexDocHome.txt" />
+		</java>
+	</target>
+	
+	<target name="buildPackageXmlAndDeployWithTests">
+		<antcall target="updatePackageXml" />
+		
+		<copy file="../src/package.xml" todir="${env.CIRCLE_ARTIFACTS}"/>
+			
+		<antcall target="DeployAndRunAllTests" />
+		
+		<if>
+			<equals arg1="${sf.runDeleteScript}" arg2="false" />
+			<then>
+				<echo>Delete Script Suppressed via sf.runDeleteScript</echo>
+			</then>
+			<else>
+				<echo>Running Delete Script, sf.runDeleteScript value:  ${sf.runDeleteScript}</echo>
+				<antcall target="destroyStaleMetadata" />
+			</else>
+		</if>
+	</target>
+
+
+
+	<!--
+		U T I L I T Y   T A R G E T S   &   M A C R O S
+		Borrowed from CumulusCI
+	-->
+	
+	<!-- updatePackageXml: Builds a new package.xml based upon the metadata in the src directory -->
+	<target name="updatePackageXml">
+    	<if>
+    		<and>
+    			<isset property="sf.package.installClass" />
+    			<isset property="sf.package.uninstallClass" />
+    		</and>
+    		<then>
+        		<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" installClass="${sf.package.installClass}" uninstallClass="${sf.package.uninstallClass}" />
+        	</then>
+        	<else>
+        		<if>
+    				<isset property="sf.package.installClass" />
+    				<then>
+        				<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" installClass="${sf.package.installClass}" />
+        			</then>
+        			<else>
+        				<if>
+    						<isset property="sf.package.uninstallClass" />
+        					<then>
+        						<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" uninstallClass="${sf.package.uninstallClass}" />
+        					</then>
+        					<else>
+        						<buildPackageXml package="${sf.package.name}" version="${sf.apiVersion}" srcDir="../src" />
+        					</else>
+        				</if>
+        			</else>
+        		</if>
+        	</else>
+        </if>
+	</target>
+
+	<!--
+		Destroys all meta-data in the target org that is not in the git repo.
+	-->
+	<target name="destroyStaleMetadata">
+		<echo>----------------------------------------------------------------------------</echo>
+		<delete dir="uninstallsrc" />
+		<delete dir="uninstall" />
+
+		<!-- Fetch all metadata in the  package from target org -->
+		<mkdir dir="uninstallsrc"/>
+		<sf:retrieve 
+			username="${sf.username}" 
+			password="${sf.password}" 
+			serverurl="${sf.serverurl}" 
+			retrieveTarget="uninstallsrc" 
+			packageNames="${sf.package.name}"/>
+
+		<!-- Build a destructiveChanges.xml pacckage to delete metadata in org but not in repo -->
+		<buildDestroyStaleMetadata srcdir="uninstallsrc" commdir="../src" dir="uninstall" />
+		
+		<copy file="${user.dir}/build/uninstall/destructiveChanges.xml" todir="${env.CIRCLE_ARTIFACTS}"/>
+		
+		<!-- deploy the destructiveChanges.xml package -->
+		<sf:deploy 
+			username="${sf.username}" 
+			password="${sf.password}" 
+			serverurl="${sf.serverurl}" 
+			deployRoot="uninstall" 
+			runAllTests="false" 
+			logType="${env.SF_LOGDETAIL}"
+			purgeOnDelete="true" />
+
+		<delete dir="uninstallsrc" />
+		<delete dir="uninstall" />
+	</target>
+</project>
