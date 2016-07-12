@@ -1,7 +1,53 @@
+## Ingnore cerain branches
+general:
+    branches:
+        ignore:
+            - /prototype.*/ #ignore all branches with "prototype"
+## Customize the test machine
 machine:
+
+  timezone:
+    America/Los_Angeles # Set the timezone
+
+  # Version of java to use
   java:
     version: oraclejdk8
+  # Version of node to use
+  node:
+    version: 6.2.2
+
+  # Override /etc/hosts
+  hosts:
+    circlehost: 127.0.0.1
+    dev.codescience.com: 127.0.0.1
+
+  # Add some environment variables
+  environment:
+    CIRCLE_ENV: test
+    Production: production
+
+
+## Customize dependencies
+dependencies:
+  pre:
+    - npm install webpack -g # install webpack
+    - npm install # install project modules
+
+  # override:
+  #   - cd spa/supervisor && npm install # install spa deps
+  #   - cd spa/supervisor && npm run ci # build spa to ./dist folder, strip stylesheets, minifiy js
+  #   - cd spa/supervisor/dist && zip -r ../../../src/staticresources/supervisor.resource *
+
+  # we automatically cache and restore many dependencies between
+  # builds. If you need to, you can add custom paths to cache:
+  # cache_directories: # top level /home/ubuntu/CROSSMARK/node_modules is cached automatically
+  #   - "/home/ubuntu/CROSSMARK/spa/supervisor/node_modules"   # cache the spa deps to speed up builds
+
+
+## Customize test commands
 test:
   override:
-    - ant -lib lib/ -buildfile build/build.xml Build: 
+    # - mocha test/unit-tests # we should do testing here
+  post:
+    - ant -q -lib lib/ -buildfile build/build.xml Build: # ant deploy metadata
         timeout: 600
