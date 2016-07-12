@@ -3,6 +3,7 @@ general:
     branches:
         ignore:
             - /prototype.*/ #ignore all branches with "prototype"
+            - master  #ignore master branch until properly configured
 ## Customize the test machine
 machine:
 
