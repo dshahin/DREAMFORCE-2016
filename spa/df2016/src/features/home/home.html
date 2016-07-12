@@ -9,7 +9,7 @@
                         </svg>
                     </div>
                     <div class="slds-media__body">
-                        <h2 class="slds-text-heading--small slds-truncate">Hello {{home.name}}</h2>
+                        <h2 class="slds-text-heading--small slds-truncate">{{product.motto}}</h2>
                     </div>
                 </div>
             </div>
@@ -18,8 +18,8 @@
                     <!-- <img src="http://i.giphy.com/cuPm4p4pClZVC.gif" width="100%" class="img-responsive" /> -->
                     <img ng-src="{{product.image}}" width="100%" class="img-responsive" />
                     <div class="slds-p-around--medium">
-                        <h2 class="slds-text-heading--medium slds-m-bottom--medium">Title {{ product.title }}</h2>
-                        <h4 class="slds-text-heading--small slds-m-bottom--medium">Summary {{ product.summary }}</h4>
+                        <h2 class="slds-text-heading--medium slds-m-bottom--medium">{{ product.title }}</h2>
+                        <h4 class="slds-text-heading--small slds-m-bottom--medium"> {{ product.summary }}</h4>
                         <p class="slds-text-body--regular slds-m-bottom--medium">${{ product.price }} <span class="text-success">
                   ({{ product.cart[0].qty }} in cart)</span></p>
                         <div class="slds-button-group" role="group">

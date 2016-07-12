@@ -5,28 +5,42 @@ window.configSettings = {
     staticPath: '',
     config: {  },
     remoteActions: {
-        getSidebar      : '{!$RemoteAction.AlfredHomeController.getSidebar}',
-        getUserInfo     : '{!$RemoteAction.AlfredHomeController.getUserInfo}',
-        yo              : '{!$Testy.say.yo.me.newell}'
+        helloWorld              : '{!$RemoteAction.DF2016Controller.helloWorld}',
     },
     mocks: {
-        // '{!$RemoteAction.AlfredHomeController.getSidebar}' : 'getSidebar',
-        // '{!$RemoteAction.AlfredHomeController.getUserInfo}' : 'getUserInfo',
-        // '{!$Testy.say.yo.me.newell}': 'products6',
-        //String value of your mock matches json object on json-server
-        '{!$Testy.say.yo.me.newell.Simple.Object}': {
-            timeout : 5000,
+
+        '{!$RemoteAction.DF2016Controller.helloWorld}': {
+            timeout : 250,
+            products : [],
+            error : false,
+            numberOfTiles : faker.random.number(20),
             method : function(){
-                return {
-                    "yo" : "my name is yo"
-                };
+                if(this.products.length === 0){
+                    for(var i=0; i< this.numberOfTiles ;i++){
+                        this.products.push({
+                            image: faker.image.image(),
+                            title: faker.lorem.sentence(),
+                            motto: faker.company.catchPhrase(),
+                            price: faker.commerce.price(99.99),
+                            summary :faker.lorem.paragraph()
+                        });
+                    }
+                }
+                return this.products;
             }
         }
     }
 };
 
 
-
+var hellowWorld = function(){
+    return {
+        timeout : 5000,
+        method : function(){
+            return 'hello';
+        }
+    }
+}
 
 
 })();
