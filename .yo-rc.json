@@ -1,0 +1,11 @@
+{
+  "generator-force": {
+    "project": {
+      "name": "DREAMFORCE-2016",
+      "issandbox": false,
+      "username": "dan@dreamforce2016.com",
+      "password": "***************",
+      "repo": "Codescience/DREAMFORCE-2016"
+    }
+  }
+}
