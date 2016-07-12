@@ -1,0 +1,91 @@
+<apex:page controller="DF2016Controller" showHeader="false" sidebar="false" standardStylesheets="false" cache="false" expires="0" docType="html-5.0" applyHtmlTag="false">
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <title>Shopper Events</title>
+
+        <apex:stylesheet value="{!URLFOR($Resource.df2016, '/assets/app.css')}"/>
+
+        <style>
+            /* This ensures Salesforce Sans loads properly */
+            @font-face{
+                font-family: "Salesforce Sans";
+                src: url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-Light.woff2')}") format("woff2"),
+                     url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-Light.woff')}") format("woff");
+                font-weight: 300;
+            }
+            @font-face{
+                font-family: "Salesforce Sans";
+                src: url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-LightItalic.woff2')}") format("woff2"),
+                     url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-LightItalic.woff')}") format("woff");
+                font-style:italic;
+                font-weight: 300;
+            }
+            @font-face{
+                font-family: "Salesforce Sans";
+                src: url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-Regular.woff2')}") format("woff2"),
+                     url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-Regular.woff')}") format("woff");
+                font-weight: 400;
+            }
+            @font-face{
+                font-family: "Salesforce Sans";
+                src: url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-Italic.woff2')}") format("woff2"),
+                     url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-Italic.woff')}") format("woff");
+                font-style:italic;
+                font-weight: 400;
+            }
+            @font-face{
+                font-family: "Salesforce Sans";
+                src: url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-Bold.woff2')}") format("woff2"),
+                     url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-Bold.woff')}") format("woff");
+                font-weight:700;
+            }
+            @font-face{
+                font-family: "Salesforce Sans";
+                src: url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-BoldItalic.woff2')}") format("woff2"),
+                     url("{!URLFOR($Resource.df2016, '/assets/fonts/webfonts/SalesforceSans-BoldItalic.woff')}") format("woff");
+                font-style:italic;
+                font-weight:700;
+            }
+            /* Load in icon fonts */
+            @font-face {
+                font-family: 'cpgtoolbox';
+                src: url("{!URLFOR($Resource.df2016, '/assets/fonts/cpgtoolbox.eot?a7i9yy')}");
+                src: url("{!URLFOR($Resource.df2016, '/assets/fonts/cpgtoolbox.eot?a7i9yy#iefix')}") format('embedded-opentype'),
+                     url("{!URLFOR($Resource.df2016, '/assets/fonts/cpgtoolbox.ttf?a7i9yy')}") format('truetype'),
+                     url("{!URLFOR($Resource.df2016, '/assets/fonts/cpgtoolbox.woff?a7i9yy')}") format('woff'),
+                     url("{!URLFOR($Resource.df2016, '/assets/fonts/cpgtoolbox.svg?a7i9yy#cpgtoolbox')}") format('svg');
+                font-weight: normal;
+                font-style: normal;
+            }
+        </style>
+
+        <script>
+            if (document.URL.indexOf('force') > 0) {
+               staticURL = '{!$Resource.df2016}';
+            } else {
+               staticURL = '';
+               appLogoURL = '/assets/images/shopper-events-logo.png';
+            }
+
+            configSettings = {
+                staticPath: staticURL,
+                appLogoPath: appLogoURL,
+                config: {
+                    logoutURL: '{!JSENCODE($Site.Prefix)}/secur/logout.jsp'
+                },
+
+                remoteActions: {
+
+                }
+            }
+        </script>
+        <apex:includeScript value="{!URLFOR($Resource.df2016, '/vendor.bundle.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.df2016, '/bundle.js')}"/>
+    </head>
+    <body>
+        <div class="ui-view"></div>
+    </body>
+</html>
+</apex:page>

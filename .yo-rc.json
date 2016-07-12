@@ -5,7 +5,14 @@
       "issandbox": false,
       "username": "dan@dreamforce2016.com",
       "password": "***************",
-      "repo": "Codescience/DREAMFORCE-2016"
+      "repo": "dshahin/DREAMFORCE-2016"
+    },
+    "df2016": {
+      "name": "df2016",
+      "description": "Demo SPA for Dreamforce 2016",
+      "repo": "dshahin/DREAMFORCE-2016",
+      "staticresource": "df2016",
+      "slds": true
     }
   }
 }
