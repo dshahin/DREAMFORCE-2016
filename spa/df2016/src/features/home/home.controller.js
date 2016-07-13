@@ -2,6 +2,7 @@ export default class HomeController {
   constructor(randomNames, jsr) {
     this.random = randomNames;
     this.name = 'World';
+    this.staticPath = window.configSettings.staticPath;
     this.products = {};
     jsr({ method: window.configSettings.remoteActions.helloWorld, args: [] })
         .then(result => this.products = result )
