@@ -32,7 +32,6 @@ machine:
 dependencies:
   pre:
     - npm install webpack -g # install webpack
-    #- npm install # install project modules
 
   override:
     - cd spa/df2016 && npm install # install spa deps
@@ -41,7 +40,7 @@ dependencies:
 
   # we automatically cache and restore many dependencies between
   # builds. If you need to, you can add custom paths to cache:
-  cache_directories: # top level /home/ubuntu/CROSSMARK/node_modules is cached automatically
+  cache_directories:
     - "/home/ubuntu/DREAMFORCE-2016/spa/df2016/node_modules"   # cache the spa deps to speed up builds
 
 
