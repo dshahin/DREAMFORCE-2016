@@ -37,13 +37,13 @@ module.exports = {
               'icons/*/*.png'
           ]
       }),
-    new openbrowser({url: 'http://localhost:4444'})
+    new openbrowser({url: 'http://localhost:8888'})
   ],
   devServer: {
     inline: true,
     contentBase: './dist',
     historyApiFallback: true,
-    port: 4444
+    port: 8888
   },
   devTool: 'source-map',
   module: {

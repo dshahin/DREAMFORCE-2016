@@ -12,7 +12,8 @@
     "lint": "eslint src/",
     "mocha": "mocha --compilers js:babel-register ./src/**/*.test.js",
     "watch": "mocha --compilers js:babel-register -w ./src/**/*.test.js",
-    "test": "npm run lint && npm run mocha"
+    "test": "npm run lint && npm run mocha",
+    "selenium" : "webdriver-manager start"
   },
   "repository": {
     "type": "git",
