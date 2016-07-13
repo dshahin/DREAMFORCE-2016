@@ -3,4 +3,5 @@
     <defaultLandingTab>standard-home</defaultLandingTab>
     <label>DF2016</label>
     <tab>DF2016</tab>
+    <tab>Card__c</tab>
 </CustomApplication>
