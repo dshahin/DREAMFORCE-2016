@@ -1,9 +1,6 @@
 var fs = require('fs');
 var zip = require('node-zip');
-// var path = require('path');
 var jsforce = require('jsforce');
-//var meta = require('jsforce-metadata-tools');
-//var keychain = require('xkeychain');
 var options;
 
 function FileListPlugin(opt) {

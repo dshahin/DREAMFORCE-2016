@@ -72,11 +72,11 @@
             window.configSettings = {
                 staticPath: staticURL,
                 config: {
-                    logoutURL: '{!JSENCODE($Site.Prefix)}/secur/logout.jsp'
+
                 },
 
                 remoteActions: {
-
+                    helloWorld : '{!$RemoteAction.DF2016Controller.helloWorld}',
                 }
             }
         </script>

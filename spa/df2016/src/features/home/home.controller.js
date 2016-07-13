@@ -3,7 +3,7 @@ export default class HomeController {
     this.random = randomNames;
     this.name = 'World';
     this.products = {};
-    jsr({ method: configSettings.remoteActions.helloWorld, args: [] })
+    jsr({ method: window.configSettings.remoteActions.helloWorld, args: [] })
         .then(result => this.products = result )
         .catch(error => console.error(error.message, error));
     this.jsr = jsr;
