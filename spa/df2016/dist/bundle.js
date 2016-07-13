@@ -4629,17 +4629,24 @@ webpackJsonp([0],[
 	      name: '=',
 	      foo: '='
 	    },
-	    template: __webpack_require__(7)
+	    template: __webpack_require__(7),
+	    controller: headerController,
+	    controllerAs: 'header'
 	  };
 	}
 
 	exports.default = _angular2.default.module('directives.header', []).directive('header', header).name;
 
+
+	function headerController() {
+	  this.staticPath = window.configSettings.staticPath;
+	}
+
 /***/ },
 /* 7 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"slds-page-header\" role=\"banner\">\n    <div class=\"slds-grid\">\n        <div class=\"slds-media__figure\">\n            <img src=\"/assets/images/avatar1.jpg\" style=\"height:100px;\" alt=\"Placeholder\" />\n        </div>\n        <div class=\"slds-col slds-has-flexi-truncate\">\n            <p class=\"slds-text-heading--label\">Store</p>\n            <div class=\"slds-grid\">\n                <div class=\"slds-grid slds-type-focus slds-no-space\">\n                    <h1 class=\"slds-text-heading--medium slds-truncate\" title=\"My Leads (truncates)\">Angular 1.5  + SFDC</h1>\n                </div>\n            </div>\n        </div>\n        <div class=\"slds-col slds-no-flex slds-align-bottom\">\n            <div class=\"slds-grid\">\n                <div class=\"slds-button-group\" role=\"group\">\n                    <a href=\"#\">Cart Stuff Yo</a>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
+	module.exports = "<div class=\"slds-page-header\" role=\"banner\">\n    <div class=\"slds-grid\">\n        <div class=\"slds-media__figure\">\n            <img ng-src=\"{{header.staticPath}}/assets/images/avatar1.jpg\" style=\"height:100px;\" alt=\"Placeholder\" />\n        </div>\n        <div class=\"slds-col slds-has-flexi-truncate\">\n            <p class=\"slds-text-heading--label\">Store</p>\n            <div class=\"slds-grid\">\n                <div class=\"slds-grid slds-type-focus slds-no-space\">\n                    <h1 class=\"slds-text-heading--medium slds-truncate\" title=\"My Leads (truncates)\">Angular 1.5  + SFDC</h1>\n                </div>\n            </div>\n        </div>\n        <div class=\"slds-col slds-no-flex slds-align-bottom\">\n            <div class=\"slds-grid\">\n                <div class=\"slds-button-group\" role=\"group\">\n                    <a href=\"#\">Cart Stuff Yo</a>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ },
 /* 8 */
