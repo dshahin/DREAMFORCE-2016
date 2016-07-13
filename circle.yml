@@ -32,17 +32,16 @@ machine:
 dependencies:
   pre:
     - npm install webpack -g # install webpack
-    - npm install # install project modules
 
-  # override:
-  #   - cd spa/supervisor && npm install # install spa deps
-  #   - cd spa/supervisor && npm run ci # build spa to ./dist folder, strip stylesheets, minifiy js
-  #   - cd spa/supervisor/dist && zip -r ../../../src/staticresources/supervisor.resource *
+  override:
+    - cd spa/df2016 && npm install # install spa deps
+    - cd spa/df2016 && npm run ci # build spa to ./dist folder, strip stylesheets, minifiy js
+    - cd spa/df2016/dist && zip -r ../../../src/staticresources/df2016.resource *
 
   # we automatically cache and restore many dependencies between
   # builds. If you need to, you can add custom paths to cache:
-  # cache_directories: # top level /home/ubuntu/CROSSMARK/node_modules is cached automatically
-  #   - "/home/ubuntu/CROSSMARK/spa/supervisor/node_modules"   # cache the spa deps to speed up builds
+  cache_directories:
+    - "/home/ubuntu/DREAMFORCE-2016/spa/df2016/node_modules"   # cache the spa deps to speed up builds
 
 
 ## Customize test commands
@@ -50,5 +49,5 @@ test:
   override:
     # - mocha test/unit-tests # we should do testing here
   post:
-    - ant -q -lib lib/ -buildfile build/build.xml Build: # ant deploy metadata
+    - ant -lib lib/ -buildfile build/build.xml Build: # ant deploy metadata
         timeout: 600

@@ -1,0 +1,38 @@
+<div catalog class="catalog-container slds-grid slds-wrap">
+    <div class="slds-col--padded slds-m-bottom--medium slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4" ng-repeat="product in home.products">
+        <div class="slds-card">
+            <div class="slds-card__header slds-grid">
+                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
+                            <use xlink:href="" ng-href="{{home.staticPath}}/assets/icons/standard-sprite/svg/symbols.svg#contact"></use>
+                        </svg>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-text-heading--small slds-truncate">{{product.motto}}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-card__body">
+                <div class="slds-text-body--regular">
+                    <!-- <img src="http://i.giphy.com/cuPm4p4pClZVC.gif" width="100%" class="img-responsive" /> -->
+                    <img ng-src="{{product.image}}" width="100%" class="img-responsive" />
+                    <div class="slds-p-around--medium">
+                        <h2 class="slds-text-heading--medium slds-m-bottom--medium">
+                            <a ng-href="/{{product.id}}">{{ product.title }}</a>
+                        </h2>
+                        <h4 class="slds-text-heading--small slds-m-bottom--medium"> {{ product.summary }}</h4>
+                        <p class="slds-text-body--regular slds-m-bottom--medium">${{ product.price }} <span class="text-success">
+                  ({{ product.cart[0].qty }} in cart)</span></p>
+                        <div class="slds-button-group" role="group">
+                            <!-- <a class="slds-button slds-button--neutral" [routerLink]="['ProductDetail', {productId: product.id}]">Learn More</a>
+                            <a class="slds-button slds-button--brand" (click)="addItem(product)"> -->
+                            <a ng-click="home.randomName()">Click me Yo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-card__footer"><a href="#">View All <span class="slds-assistive-text">entity type</span></a></div>
+        </div>
+    </div>
+</div>
