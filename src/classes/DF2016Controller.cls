@@ -1,7 +1,4 @@
 public with sharing class DF2016Controller {
-	public DF2016Controller() {
-
-	}
 
 	//get a supervisor's team
     @ReadOnly
@@ -15,12 +12,14 @@ public with sharing class DF2016Controller {
     }
 
 	public class Card{
+		public String id {get;set;}
 		public String title {get;set;}
 		public String motto {get;set;}
 		public Decimal price {get;set;}
 		public String image {get;set;}
 		public String summary {get;set;}
 		public Card(Card__c card){
+			this.id = card.id;
 			this.title = card.Name;
 			this.motto = card.motto__c;
 			this.price = card.price__c;

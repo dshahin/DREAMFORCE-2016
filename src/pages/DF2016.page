@@ -71,8 +71,11 @@
 
             window.configSettings = {
                 staticPath: staticURL,
-                config: {
-
+                user:{
+                    id : '{!$User.id}',
+                    firstName : '{!$User.firstName}',
+                    lastName : '{!$User.lastName}',
+                    uiThemeDisplayed : '{!$User.uiThemeDisplayed}', 
                 },
 
                 remoteActions: {
