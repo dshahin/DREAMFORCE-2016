@@ -49,5 +49,5 @@ test:
   override:
     # - mocha test/unit-tests # we should do testing here
   post:
-    - ant -lib lib/ -buildfile build/build.xml Build: # ant deploy metadata
-        timeout: 600
+    - ant -q -lib lib/ -buildfile build/build.xml -logfile ${env.CIRCLE_ARTIFACTS}/ant.log.txt Build: # ant deploy metadata
+        timeout: 1200
