@@ -3,6 +3,7 @@
     <fullName>Dreamforce2016</fullName>
     <types>
         <members>DF2016Controller</members>
+        <members>DF2016Test</members>
         <name>ApexClass</name>
     </types>
     <types>
