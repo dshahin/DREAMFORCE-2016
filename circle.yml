@@ -31,7 +31,7 @@ machine:
 ## Customize dependencies
 dependencies:
   pre:
-    - npm install webpack -g # install webpack
+    - npm install webpack protractor -g # install webpack
 
   override:
     - cd spa/df2016 && npm install # install spa deps
