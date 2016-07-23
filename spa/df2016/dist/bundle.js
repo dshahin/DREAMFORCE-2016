@@ -35,6 +35,7 @@ webpackJsonp([0],[
 	__webpack_require__(17);
 	//TODO move to a core module to load all deps
 
+
 	_angular2.default.element(document).ready(function () {
 	  _angular2.default.module('app', [_angularUiRouter2.default, _jsrMocks2.default, _header2.default, _home2.default]).config(_app2.default);
 
@@ -4646,7 +4647,7 @@ webpackJsonp([0],[
 /* 7 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"slds-page-header\" role=\"banner\">\n    <div class=\"slds-grid\">\n        <div class=\"slds-media__figure\">\n            <img ng-src=\"{{header.staticPath}}/assets/images/avatar1.jpg\" style=\"height:100px;\" alt=\"Placeholder\" />\n        </div>\n        <div class=\"slds-col slds-has-flexi-truncate\">\n            <p class=\"slds-text-heading--label\">Store</p>\n            <div class=\"slds-grid\">\n                <div class=\"slds-grid slds-type-focus slds-no-space\">\n                    <h1 class=\"slds-text-heading--medium slds-truncate\" title=\"My Leads (truncates)\">Angular 1.5  + SFDC</h1>\n                </div>\n            </div>\n        </div>\n        <div class=\"slds-col slds-no-flex slds-align-bottom\">\n            <div class=\"slds-grid\">\n                <div class=\"slds-button-group\" role=\"group\">\n                    <a href=\"#\">Cart Stuff Yo</a>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
+	module.exports = "<div class=\"slds-page-header\" role=\"banner\">\n    <div class=\"slds-grid\">\n        <div class=\"slds-media__figure\">\n            <img ng-src=\"{{header.staticPath}}/assets/images/avatar1.jpg\" style=\"height:100px;\" alt=\"Placeholder\" />\n        </div>\n        <div class=\"slds-col slds-has-flexi-truncate\">\n            <p class=\"slds-text-heading--label\">Store</p>\n            <div class=\"slds-grid\">\n                <div class=\"slds-grid slds-type-focus slds-no-space\">\n                    <h1 class=\"slds-text-heading--medium slds-truncate\" title=\"My Leads (truncates)\">Angular 1.5  + SFDC</h1>\n                </div>\n            </div>\n        </div>\n        <div class=\"slds-col slds-no-flex slds-align-bottom\">\n            <div class=\"slds-grid\">\n                <div class=\"slds-button-group\" role=\"group\">\n                    <a href=\"#\">Hello there!</a>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ },
 /* 8 */
@@ -4775,7 +4776,7 @@ webpackJsonp([0],[
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = "<div catalog class=\"catalog-container slds-grid slds-wrap\">\n    <div class=\"slds-col--padded slds-m-bottom--medium slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4\" ng-repeat=\"product in home.products\">\n        <div class=\"slds-card\">\n            <div class=\"slds-card__header slds-grid\">\n                <div class=\"slds-media slds-media--center slds-has-flexi-truncate\">\n                    <div class=\"slds-media__figure\">\n                        <svg aria-hidden=\"true\" class=\"slds-icon slds-icon-standard-contact slds-icon--small\">\n                            <use xlink:href=\"\" ng-href=\"{{home.staticPath}}/assets/icons/standard-sprite/svg/symbols.svg#contact\"></use>\n                        </svg>\n                    </div>\n                    <div class=\"slds-media__body\">\n                        <h2 class=\"slds-text-heading--small slds-truncate\">{{product.motto}}</h2>\n                    </div>\n                </div>\n            </div>\n            <div class=\"slds-card__body\">\n                <div class=\"slds-text-body--regular\">\n                    <!-- <img src=\"http://i.giphy.com/cuPm4p4pClZVC.gif\" width=\"100%\" class=\"img-responsive\" /> -->\n                    <img ng-src=\"{{product.image}}\" width=\"100%\" class=\"img-responsive\" />\n                    <div class=\"slds-p-around--medium\">\n                        <h2 class=\"slds-text-heading--medium slds-m-bottom--medium\">\n                            <a ng-href=\"/{{product.id}}\">{{ product.title }}</a>\n                        </h2>\n                        <h4 class=\"slds-text-heading--small slds-m-bottom--medium\"> {{ product.summary }}</h4>\n                        <p class=\"slds-text-body--regular slds-m-bottom--medium\">${{ product.price }} <span class=\"text-success\">\n                  ({{ product.cart[0].qty }} in cart)</span></p>\n                        <div class=\"slds-button-group\" role=\"group\">\n                            <!-- <a class=\"slds-button slds-button--neutral\" [routerLink]=\"['ProductDetail', {productId: product.id}]\">Learn More</a>\n                            <a class=\"slds-button slds-button--brand\" (click)=\"addItem(product)\"> -->\n                            <a ng-click=\"home.randomName()\">Click me Yo</a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"slds-card__footer\"><a href=\"#\">View All <span class=\"slds-assistive-text\">entity type</span></a></div>\n        </div>\n    </div>\n</div>\n"
+	module.exports = "<div catalog class=\"catalog-container slds-grid slds-wrap\">\n    <div class=\"slds-col--padded slds-m-bottom--medium slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4\"\n        ng-repeat=\"product in home.products\">\n        <div class=\"slds-card\">\n            <div class=\"slds-card__header slds-grid\">\n                <div class=\"slds-media slds-media--center slds-has-flexi-truncate\">\n                    <div class=\"slds-media__figure\" ng-click=\"home.getCards()\">\n                        <svg aria-hidden=\"true\" class=\"slds-icon slds-icon-standard-contact slds-icon--small\">\n                            <use xlink:href=\"\" ng-href=\"{{home.staticPath}}/assets/icons/standard-sprite/svg/symbols.svg#contact\"></use>\n                        </svg>\n                    </div>\n                    <div class=\"slds-media__body\">\n                        <h2 class=\"slds-text-heading--small slds-truncate\">{{product.motto}}</h2>\n                    </div>\n                </div>\n            </div>\n            <div class=\"slds-card__body\">\n                <div class=\"slds-text-body--regular\">\n                    <img ng-src=\"{{product.image}}\" width=\"100%\" class=\"img-responsive\" />\n                    <div class=\"slds-p-around--medium\">\n                        <h2 class=\"slds-text-heading--medium slds-m-bottom--medium\">\n                            <a ng-href=\"/{{product.id}}\">{{ product.title }}</a>\n                        </h2>\n                        <h4 class=\"slds-text-heading--small slds-m-bottom--medium\"> {{ product.summary }}</h4>\n                        <p class=\"slds-text-body--regular slds-m-bottom--medium\">${{ product.price }} <span class=\"text-success\">\n                  ({{ product.cart[0].qty }} in cart)</span></p>\n                        <div class=\"slds-button-group\" role=\"group\">\n                            <!-- <a class=\"slds-button slds-button--neutral\" [routerLink]=\"['ProductDetail', {productId: product.id}]\">Learn More</a>\n                            <a class=\"slds-button slds-button--brand\" (click)=\"addItem(product)\"> -->\n                            <a ng-click=\"home.randomName()\">Click me Yo</a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"slds-card__footer\"><a href=\"#\">View All <span class=\"slds-assistive-text\">entity type</span></a></div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ },
 /* 13 */
@@ -4793,32 +4794,26 @@ webpackJsonp([0],[
 
 	var HomeController = function () {
 	  function HomeController(randomNames, jsr) {
-	    var _this = this;
-
 	    _classCallCheck(this, HomeController);
 
 	    this.random = randomNames;
 	    this.name = 'World';
 	    this.staticPath = window.configSettings.staticPath;
-	    this.products = {};
-	    jsr({ method: window.configSettings.remoteActions.helloWorld, args: [] }).then(function (result) {
-	      return _this.products = result;
-	    }).catch(function (error) {
-	      return console.error(error.message, error);
-	    });
+
 	    this.jsr = jsr;
+	    this.getCards();
 	  }
 
 	  _createClass(HomeController, [{
-	    key: 'getProducts',
-	    value: function getProducts() {
-	      var _this2 = this;
+	    key: 'getCards',
+	    value: function getCards() {
+	      var _this = this;
 
-	      this.jsr({
-	        method: configSettings.remoteActions.yo,
-	        args: []
-	      }).then(function (result) {
-	        return _this2.products = result;
+	      this.products = {};
+	      return this.jsr({ method: window.configSettings.remoteActions.helloWorld, args: [] }).then(function (result) {
+	        return _this.products = result;
+	      }).catch(function (error) {
+	        return console.error(error.message, error);
 	      });
 	    }
 	  }, {
