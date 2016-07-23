@@ -13,7 +13,8 @@
     "mocha": "mocha --compilers js:babel-register ./src/**/*.test.js",
     "watch": "mocha --compilers js:babel-register -w ./src/**/*.test.js",
     "test": "npm run lint && npm run mocha",
-    "selenium": "webdriver-manager start"
+    "selenium" : "webdriver-manager start",
+    "protractor": " npm run start && npm run selenium && protractor"
   },
   "repository": {
     "type": "git",
@@ -48,9 +49,6 @@
     "eslint": "^3.1.1",
     "eslint-config-defaults": "^9.0.0",
     "extract-text-webpack-plugin": "^1.0.1",
-    "faker": "^3.0.1",
-    "jsforce": "^1.5.1",
-    "jsforce-metadata-tools": "^1.2.0",
     "lodash": "^4.0.0",
     "mocha": "^2.4.5",
     "ng-annotate": "^1.2.1",
