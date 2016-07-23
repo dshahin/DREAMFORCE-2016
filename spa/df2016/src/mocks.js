@@ -22,12 +22,15 @@ function helloWorld(){
     return {
         timeout : 250,
         products : [],
-        error : false,
-        numberOfTiles : faker.random.number(30),
+        error : true ,
+        numberOfTiles : faker.random.number(10),
         method : function(){
-            if(this.products.length === 0){
-                for(var i=0; i< this.numberOfTiles ;i++){
-                    this.products.push({
+            var mock = this;
+            mock.error = !this.error;
+            //mock.products = [];
+            mock.numberOfTiles = faker.random.number(10);
+                for(var i=0; i< mock.numberOfTiles ;i++){
+                    mock.products.unshift({
                         id : faker.random.uuid(),
                         image: faker.image.image(),
                         title: faker.lorem.sentence(),
@@ -36,8 +39,8 @@ function helloWorld(){
                         summary :faker.lorem.paragraph()
                     });
                 }
-            }
-            return this.products;
+
+            return mock.products;
         }
     };
 }

@@ -3,19 +3,16 @@ export default class HomeController {
     this.random = randomNames;
     this.name = 'World';
     this.staticPath = window.configSettings.staticPath;
-    this.products = {};
-    jsr({ method: window.configSettings.remoteActions.helloWorld, args: [] })
-        .then(result => this.products = result )
-        .catch(error => console.error(error.message, error));
+
     this.jsr = jsr;
+    this.getCards();
   }
 
-  getProducts() {
-      this.jsr({
-          method: configSettings.remoteActions.yo,
-          args: []
-      })
-      .then(result => this.products = result );
+  getCards() {
+      this.products = {};
+      return this.jsr({ method: window.configSettings.remoteActions.helloWorld, args: [] })
+          .then(result => this.products = result )
+          .catch(error => console.error(error.message, error));
   }
 
   changeName() {
