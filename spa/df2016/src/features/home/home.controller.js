@@ -10,7 +10,7 @@ export default class HomeController {
 
   getCards() {
       this.products = {};
-      return this.jsr({ method: window.configSettings.remoteActions.helloWorld, args: [] })
+      return this.jsr({ method: window.configSettings.remoteActions.getCards, args: [] })
           .then(result => this.products = result )
           .catch(error => console.error(error.message, error));
   }

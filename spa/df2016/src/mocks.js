@@ -10,15 +10,15 @@ window.configSettings = {
         uiThemeDisplayed : 'Theme3',
     },
     remoteActions: {
-        helloWorld  : '{!$RemoteAction.DF2016Controller.helloWorld}',
+        getCards  : '{!$RemoteAction.DF2016Controller.getCards}',
     },
     mocks: {
-        '{!$RemoteAction.DF2016Controller.helloWorld}': helloWorld()
+        '{!$RemoteAction.DF2016Controller.getCards}': getCards()
     }
 };
 
 //mock factory
-function helloWorld(){
+function getCards(){
     return {
         timeout : 250,
         products : [],
