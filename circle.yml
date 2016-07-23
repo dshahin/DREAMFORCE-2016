@@ -35,6 +35,7 @@ dependencies:
 
   override:
     - cd spa/df2016 && npm install # install spa deps
+    - protractor
     - cd spa/df2016 && npm run ci # build spa to ./dist folder, strip stylesheets, minifiy js
     - cd spa/df2016/dist && zip -r ../../../src/staticresources/df2016.resource *
 
