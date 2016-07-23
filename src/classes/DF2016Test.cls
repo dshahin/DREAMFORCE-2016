@@ -1,9 +1,9 @@
 @isTest
 private class DF2016Test {
 
-	@isTest static void test_helloWorld() {
+	@isTest static void test_getCards() {
 		Test.startTest();
-		DF2016Controller.Card[] cards = DF2016Controller.helloWorld();
+		DF2016Controller.Card[] cards = DF2016Controller.getCards();
 		Test.stopTest();
 		system.assertEquals(3, cards.size());
 	}
