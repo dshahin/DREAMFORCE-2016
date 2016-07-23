@@ -1,9 +1,10 @@
 <div catalog class="catalog-container slds-grid slds-wrap">
-    <div class="slds-col--padded slds-m-bottom--medium slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4" ng-repeat="product in home.products">
+    <div class="slds-col--padded slds-m-bottom--medium slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4"
+        ng-repeat="product in home.products">
         <div class="slds-card">
             <div class="slds-card__header slds-grid">
                 <div class="slds-media slds-media--center slds-has-flexi-truncate">
-                    <div class="slds-media__figure">
+                    <div class="slds-media__figure" ng-click="home.getCards()">
                         <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
                             <use xlink:href="" ng-href="{{home.staticPath}}/assets/icons/standard-sprite/svg/symbols.svg#contact"></use>
                         </svg>
@@ -15,7 +16,6 @@
             </div>
             <div class="slds-card__body">
                 <div class="slds-text-body--regular">
-                    <!-- <img src="http://i.giphy.com/cuPm4p4pClZVC.gif" width="100%" class="img-responsive" /> -->
                     <img ng-src="{{product.image}}" width="100%" class="img-responsive" />
                     <div class="slds-p-around--medium">
                         <h2 class="slds-text-heading--medium slds-m-bottom--medium">

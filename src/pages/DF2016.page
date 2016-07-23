@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-        <title>Dreamforce 2016</title>
+        <title>Dreamforce 2016!</title>
 
         <apex:stylesheet value="{!URLFOR($Resource.df2016, '/assets/app.css')}"/>
 
@@ -75,11 +75,11 @@
                     id : '{!$User.Id}',
                     firstName : '{!$User.FirstName}',
                     lastName : '{!$User.LastName}',
-                    uiThemeDisplayed : '{!$User.uiThemeDisplayed}', 
+                    uiThemeDisplayed : '{!$User.uiThemeDisplayed}',
                 },
 
                 remoteActions: {
-                    helloWorld : '{!$RemoteAction.DF2016Controller.helloWorld}',
+                    getCards : '{!$RemoteAction.DF2016Controller.getCards}',
                 }
             }
         </script>

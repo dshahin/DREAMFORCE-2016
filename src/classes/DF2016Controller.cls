@@ -3,7 +3,7 @@ public with sharing class DF2016Controller {
 	//get a supervisor's team
     @ReadOnly
     @RemoteAction
-    public static Card[] helloWorld() {
+    public static Card[] getCards() {
         Card[] cards = new Card[]{};
 		for(Card__c card: [SELECT Id, Name, Motto__c, Price__c, Image__c, Summary__c from Card__c]){
 			cards.add(new Card(card));
