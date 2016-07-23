@@ -72,9 +72,9 @@
             window.configSettings = {
                 staticPath: staticURL,
                 user:{
-                    id : '{!$User.id}',
-                    firstName : '{!$User.firstName}',
-                    lastName : '{!$User.lastName}',
+                    id : '{!$User.Id}',
+                    firstName : '{!$User.FirstName}',
+                    lastName : '{!$User.LastName}',
                     uiThemeDisplayed : '{!$User.uiThemeDisplayed}', 
                 },
 
