@@ -17,6 +17,12 @@ export default angular.module('directives.card', [])
   .name;
 
 
-function headerController(){
-    this.staticPath = window.configSettings.staticPath;
+function headerController($scope,$rootScope,$log){
+    'ngInject';
+    $scope.staticPath = window.configSettings.staticPath;
+
+    $scope.getCards = () => {
+        $rootScope.$broadcast('get-cards');
+        $log.debug('firing get cards event');
+    }
 }

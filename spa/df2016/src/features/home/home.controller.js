@@ -1,27 +1,30 @@
 export default class HomeController {
-  constructor(randomNames, jsr) {
+  constructor(randomNames, jsr, $scope, $log) {
+    'ngInject';
     this.random = randomNames;
     this.name = 'World';
     this.staticPath = window.configSettings.staticPath;
+    this.$scope = $scope;
+    this.$log = $log;
 
     this.jsr = jsr;
+    this.cards = {};
+    this.$scope.$on('get-cards', (event, data) =>{
+        this.$log.debug('received get cards event');
+        this.getCards();
+    });
     this.getCards();
   }
 
+
+
   getCards() {
-      this.cards = {};
+
       return this.jsr({ method: window.configSettings.remoteActions.getCards, args: [] })
-          .then(result => this.cards = result )
+          .then(cards => this.cards = cards )
           .catch(error => console.error(error.message, error));
   }
 
-  changeName() {
-    this.name = 'Code | Science';
-  }
-
-  randomName() {
-    this.name = this.random.getName();
-  }
 }
 
-HomeController.$inject = ['randomNames', 'jsr'];
+HomeController.$inject = ['randomNames', 'jsr', '$scope', '$log'];

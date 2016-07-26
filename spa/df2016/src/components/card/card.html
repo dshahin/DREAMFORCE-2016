@@ -1,9 +1,9 @@
 <div class="slds-card">
     <div class="slds-card__header slds-grid">
         <div class="slds-media slds-media--center slds-has-flexi-truncate">
-            <div class="slds-media__figure" ng-click="home.getCards()">
+            <div class="slds-media__figure" ng-click="getCards()">
                 <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
-                    <use xlink:href="" ng-href="{{home.staticPath}}/assets/icons/standard-sprite/svg/symbols.svg#contact"></use>
+                    <use xlink:href="" ng-href="{{staticPath}}/assets/icons/standard-sprite/svg/symbols.svg#contact"></use>
                 </svg>
             </div>
             <div class="slds-media__body">
@@ -19,13 +19,7 @@
                     <a ng-href="/{{card.id}}">{{ card.title }}</a>
                 </h2>
                 <h4 class="slds-text-heading--small slds-m-bottom--medium"> {{ card.summary }}</h4>
-                <p class="slds-text-body--regular slds-m-bottom--medium">${{ card.price }} <span class="text-success">
-          ({{ card.cart[0].qty }} in cart)</span></p>
-                <div class="slds-button-group" role="group">
-                    <!-- <a class="slds-button slds-button--neutral" [routerLink]="['ProductDetail', {cardId: card.id}]">Learn More</a>
-                    <a class="slds-button slds-button--brand" (click)="addItem(card)"> -->
-                    <a ng-click="home.randomName()">Click me Yo</a>
-                </div>
+                
             </div>
         </div>
     </div>
