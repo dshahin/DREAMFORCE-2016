@@ -29,13 +29,13 @@ machine:
 
 
 ## Customize dependencies
-dependencies:
-  pre:
-    - npm install webpack protractor -g # install webpack
+#dependencies:
+  #pre:
+    #- npm install webpack protractor -g # install webpack
 
   override:
     - cd spa/df2016 && npm install # install spa deps
-    - protractor
+    #- protractor
     - cd spa/df2016 && npm run ci # build spa to ./dist folder, strip stylesheets, minifiy js
     - cd spa/df2016/dist && zip -r ../../../src/staticresources/df2016.resource *
 
