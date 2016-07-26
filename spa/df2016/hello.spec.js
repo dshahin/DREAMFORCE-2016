@@ -21,7 +21,12 @@ function snap(filename, sleep){
       sleep = sleep || 2000;
       browser.sleep(sleep);
       browser.takeScreenshot().then(function(png) {
-            var stream = fs.createWriteStream("./" + filename + '.png');
+        var path = process.env.CIRCLE_ARTIFACTS || './artifacts'
+
+        var stream = fs.createWriteStream(path + "/" + filename + '.png');
+
+
+
             stream.write(new Buffer(png, 'base64'));
             stream.end();
         });
