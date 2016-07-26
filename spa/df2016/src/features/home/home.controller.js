@@ -9,9 +9,9 @@ export default class HomeController {
   }
 
   getCards() {
-      this.products = {};
+      this.cards = {};
       return this.jsr({ method: window.configSettings.remoteActions.getCards, args: [] })
-          .then(result => this.products = result )
+          .then(result => this.cards = result )
           .catch(error => console.error(error.message, error));
   }
 
