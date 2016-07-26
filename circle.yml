@@ -29,7 +29,7 @@ machine:
 
 
 ## Customize dependencies
-#dependencies:
+dependencies:
   #pre:
     #- npm install webpack protractor -g # install webpack
 
