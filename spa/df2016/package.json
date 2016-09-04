@@ -13,7 +13,7 @@
     "mocha": "mocha --compilers js:babel-register ./src/**/*.test.js",
     "watch": "mocha --compilers js:babel-register -w ./src/**/*.test.js",
     "test": "npm run lint && npm run mocha",
-    "selenium" : "webdriver-manager start",
+    "selenium": "webdriver-manager start",
     "protractor": " npm run start && npm run selenium && protractor"
   },
   "repository": {
@@ -31,8 +31,8 @@
     "angular": "^1.5.8",
     "angular-ui-router": "^0.3.1",
     "jquery": "^3.1.0",
+    "jsr-mocks": "2.0.3",
     "moment": "^2.14.1"
-
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
