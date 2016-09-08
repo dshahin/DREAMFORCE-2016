@@ -1,5 +1,5 @@
 var webpack = require('webpack');
-var slds = require('copy-webpack-plugin');
+var copyfiles = require('copy-webpack-plugin');
 var path = require('path');
 var sfdcdeploy = require('./deploy/deploy');
 var openbrowser = require('open-browser-webpack-plugin');
@@ -20,7 +20,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
-    new slds([
+    new copyfiles([
       { from: './src/faker.min.js', to: './faker.min.js'},
       { from: './src/mocks.js', to: './mocks.js'},
       { from: './node_modules/@salesforce-ux/design-system/assets', to: './assets'},

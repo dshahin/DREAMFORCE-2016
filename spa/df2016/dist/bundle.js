@@ -12,25 +12,25 @@ webpackJsonp([0],[
 
 	var _angularUiRouter2 = _interopRequireDefault(_angularUiRouter);
 
-	var _app = __webpack_require__(5);
+	var _jsrMocks = __webpack_require__(5);
+
+	var _jsrMocks2 = _interopRequireDefault(_jsrMocks);
+
+	var _app = __webpack_require__(6);
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _header = __webpack_require__(6);
+	var _header = __webpack_require__(7);
 
 	var _header2 = _interopRequireDefault(_header);
 
-	var _card = __webpack_require__(8);
+	var _card = __webpack_require__(9);
 
 	var _card2 = _interopRequireDefault(_card);
 
-	var _home = __webpack_require__(10);
+	var _home = __webpack_require__(11);
 
 	var _home2 = _interopRequireDefault(_home);
-
-	var _jsrMocks = __webpack_require__(18);
-
-	var _jsrMocks2 = _interopRequireDefault(_jsrMocks);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4632,6 +4632,127 @@ webpackJsonp([0],[
 
 /***/ },
 /* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; }; /* globals window, Visualforce */
+
+
+	var _angular = __webpack_require__(1);
+
+	var _angular2 = _interopRequireDefault(_angular);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//if we can't find a specific jsr mock method
+	var genericMock = {
+	    method: function method(args) {
+	        alert('mock not implemented for ' + args[0]);
+	        console.error('mock not implemented for ', args);
+	    },
+	    timeout: 500 //half second
+	};
+
+	function jsrMocks() {
+	    var $mocks;
+	    var $mockServer;
+	    return {
+	        setMocks: function setMocks(mocks, mockServer) {
+	            $mocks = mocks;
+	            $mockServer = mockServer;
+	        },
+
+	        $get: function $get($log, $http, $window, $timeout) {
+	            'ngInject';
+
+	            if (!window.Visualforce) {
+
+	                return {
+	                    remoting: {
+	                        Manager: {
+	                            invokeAction: invokeStaticAction
+	                        }
+	                    }
+	                };
+	            } else {
+	                return Visualforce;
+	            }
+
+	            function invokeStaticAction() {
+
+	                var lastArg = arguments[arguments.length - 1],
+	                    callback = lastArg,
+	                    mock = $mocks[arguments[0]] || genericMock,
+	                    result = mock.method(arguments),
+	                    event = {
+	                    status: true
+	                };
+
+	                if (mock.error) {
+	                    event.status = false;
+	                    event.message = mock.error;
+	                }
+
+	                if ((typeof callback === 'undefined' ? 'undefined' : _typeof(callback)) === 'object') {
+	                    callback = arguments[arguments.length - 2];
+	                }
+	                $timeout(function () {
+	                    callback(result, event);
+	                }, mock.timeout);
+	            }
+	        }
+
+	    };
+	}
+
+	function jsr(jsrMocks, $q, $rootScope) {
+	    'ngInject';
+
+	    var Visualforce = jsrMocks;
+
+	    return function (request) {
+	        var deferred = $q.defer();
+
+	        var parameters = [request.method];
+
+	        if (request.args) {
+
+	            for (var i = 0; i < request.args.length; i++) {
+	                parameters.push(request.args[i]);
+	            }
+	        }
+	        var callback = function callback(result, event) {
+	            $rootScope.$apply(function () {
+	                if (event.status) {
+	                    deferred.resolve(result);
+	                } else {
+	                    deferred.reject(event);
+	                }
+	            });
+	        };
+
+	        parameters.push(callback);
+
+	        if (request.options) {
+	            parameters.push(request.options);
+	        }
+
+	        Visualforce.remoting.Manager.invokeAction.apply(Visualforce.remoting.Manager, parameters);
+
+	        return deferred.promise;
+	    };
+	}
+
+	exports.default = _angular2.default.module('jsrMocks', []).provider('jsrMocks', jsrMocks).factory('jsr', jsr).name;
+
+
+/***/ },
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -4645,11 +4766,11 @@ webpackJsonp([0],[
 	function routing($urlRouterProvider, $locationProvider, jsrMocksProvider) {
 	  $locationProvider.html5Mode(false);
 	  $urlRouterProvider.otherwise('/');
-	  jsrMocksProvider.setMocks(configSettings.mocks);
+	  jsrMocksProvider.setMocks(window.configSettings.mocks);
 	}
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4671,7 +4792,7 @@ webpackJsonp([0],[
 	      name: '=',
 	      foo: '='
 	    },
-	    template: __webpack_require__(7),
+	    template: __webpack_require__(8),
 	    controller: headerController,
 	    controllerAs: 'header'
 	  };
@@ -4685,13 +4806,13 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"slds-page-header\" role=\"banner\">\n    <div class=\"slds-grid\">\n        <div class=\"slds-media__figure\">\n            <img ng-src=\"{{header.staticPath}}/assets/images/avatar1.jpg\" style=\"height:100px;\" alt=\"Placeholder\" />\n        </div>\n        <div class=\"slds-col slds-has-flexi-truncate\">\n            <p class=\"slds-text-heading--label\">Store</p>\n            <div class=\"slds-grid\">\n                <div class=\"slds-grid slds-type-focus slds-no-space\">\n                    <h1 class=\"slds-text-heading--medium slds-truncate\" title=\"My Leads (truncates)\">Angular 1.5  + SFDC</h1>\n                </div>\n            </div>\n        </div>\n        <div class=\"slds-col slds-no-flex slds-align-bottom\">\n            <div class=\"slds-grid\">\n                <div class=\"slds-button-group\" role=\"group\">\n                    <a href=\"#\">Hello there!</a>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4713,7 +4834,7 @@ webpackJsonp([0],[
 	    scope: {
 	      card: '='
 	    },
-	    template: __webpack_require__(9),
+	    template: __webpack_require__(10),
 	    controller: headerController,
 	    controllerAs: 'card'
 	  };
@@ -4734,13 +4855,13 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"slds-card\">\n    <div class=\"slds-card__header slds-grid\">\n        <div class=\"slds-media slds-media--center slds-has-flexi-truncate\">\n            <div class=\"slds-media__figure\" ng-click=\"getCards()\">\n                <svg aria-hidden=\"true\" class=\"slds-icon slds-icon-standard-contact slds-icon--small\">\n                    <use xlink:href=\"\" ng-href=\"{{staticPath}}/assets/icons/standard-sprite/svg/symbols.svg#contact\"></use>\n                </svg>\n            </div>\n            <div class=\"slds-media__body\">\n                <h2 class=\"slds-text-heading--small slds-truncate\">{{card.motto}}</h2>\n            </div>\n        </div>\n    </div>\n    <div class=\"slds-card__body\">\n        <div class=\"slds-text-body--regular\">\n            <img ng-src=\"{{card.image}}\" width=\"100%\" class=\"img-responsive\" />\n            <div class=\"slds-p-around--medium\">\n                <h2 class=\"slds-text-heading--medium slds-m-bottom--medium\">\n                    <a ng-href=\"/{{card.id}}\">{{ card.title }}</a>\n                </h2>\n                <h4 class=\"slds-text-heading--small slds-m-bottom--medium\"> {{ card.summary }}</h4>\n                \n            </div>\n        </div>\n    </div>\n    <div class=\"slds-card__footer\"><a href=\"#\">View All <span class=\"slds-assistive-text\">entity type</span></a></div>\n</div>\n"
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4749,7 +4870,7 @@ webpackJsonp([0],[
 	  value: true
 	});
 
-	__webpack_require__(11);
+	__webpack_require__(12);
 
 	var _angular = __webpack_require__(1);
 
@@ -4759,19 +4880,19 @@ webpackJsonp([0],[
 
 	var _angularUiRouter2 = _interopRequireDefault(_angularUiRouter);
 
-	var _home = __webpack_require__(13);
+	var _home = __webpack_require__(14);
 
 	var _home2 = _interopRequireDefault(_home);
 
-	var _home3 = __webpack_require__(15);
+	var _home3 = __webpack_require__(16);
 
 	var _home4 = _interopRequireDefault(_home3);
 
-	var _randomNames = __webpack_require__(16);
+	var _randomNames = __webpack_require__(17);
 
 	var _randomNames2 = _interopRequireDefault(_randomNames);
 
-	var _greeting = __webpack_require__(17);
+	var _greeting = __webpack_require__(18);
 
 	var _greeting2 = _interopRequireDefault(_greeting);
 
@@ -4780,13 +4901,13 @@ webpackJsonp([0],[
 	exports.default = _angular2.default.module('app.home', [_angularUiRouter2.default, _randomNames2.default, _greeting2.default]).config(_home2.default).controller('HomeController', _home4.default).name;
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	/*
@@ -4842,7 +4963,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4856,26 +4977,26 @@ webpackJsonp([0],[
 	function routes($stateProvider) {
 	  $stateProvider.state('home', {
 	    url: '/',
-	    template: __webpack_require__(14),
+	    template: __webpack_require__(15),
 	    controller: 'HomeController',
 	    controllerAs: 'home'
 	  });
 	}
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = "<header name=\"Newell\" foo=\"bar\"></header>\n<div catalog class=\"catalog-container slds-grid slds-wrap\">\n    <!-- <pre>{{home.products | json}}</pre> -->\n    <div class=\"slds-col--padded slds-m-bottom--medium slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4\"\n        ng-repeat=\"card in home.cards\">\n        <card card=\"card\"/>\n    </div>\n</div>\n"
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4883,43 +5004,44 @@ webpackJsonp([0],[
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var HomeController = function () {
-	  HomeController.$inject = ["randomNames", "jsr", "$scope", "$log"];
-	  function HomeController(randomNames, jsr, $scope, $log) {
-	    'ngInject';
+	    HomeController.$inject = ["randomNames", "jsr", "$scope", "$log"];
+	    function HomeController(randomNames, jsr, $scope, $log) {
+	        'ngInject';
 
-	    var _this = this;
+	        var _this = this;
 
-	    _classCallCheck(this, HomeController);
+	        _classCallCheck(this, HomeController);
 
-	    this.random = randomNames;
-	    this.name = 'World';
-	    this.staticPath = window.configSettings.staticPath;
-	    this.$scope = $scope;
-	    this.$log = $log;
+	        this.random = randomNames;
+	        this.name = 'World';
+	        this.staticPath = window.configSettings.staticPath;
+	        this.$scope = $scope;
+	        this.$log = $log;
 
-	    this.jsr = jsr;
-	    this.cards = {};
-	    this.$scope.$on('get-cards', function (event, data) {
-	      _this.$log.debug('received get cards event');
-	      _this.getCards();
-	    });
-	    this.getCards();
-	  }
-
-	  _createClass(HomeController, [{
-	    key: 'getCards',
-	    value: function getCards() {
-	      var _this2 = this;
-
-	      return this.jsr({ method: window.configSettings.remoteActions.getCards, args: [] }).then(function (cards) {
-	        return _this2.cards = cards;
-	      }).catch(function (error) {
-	        return console.error(error.message, error);
-	      });
+	        this.jsr = jsr;
+	        this.cards = {};
+	        this.$scope.$on('get-cards', function (event, data) {
+	            _this.$log.debug('received get cards event');
+	            _this.getCards();
+	        });
+	        this.getCards();
 	    }
-	  }]);
 
-	  return HomeController;
+	    _createClass(HomeController, [{
+	        key: 'getCards',
+	        value: function getCards() {
+	            var _this2 = this;
+
+	            return this.jsr({ method: window.configSettings.remoteActions.getCards, args: [] }).then(function (cards) {
+	                return _this2.cards = cards;
+	            }).catch(function (error) {
+	                console.error(error.message, error);
+	                alert(error.message);
+	            });
+	        }
+	    }]);
+
+	    return HomeController;
 	}();
 
 	exports.default = HomeController;
@@ -4928,7 +5050,7 @@ webpackJsonp([0],[
 	HomeController.$inject = ['randomNames', 'jsr', '$scope', '$log'];
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4969,7 +5091,7 @@ webpackJsonp([0],[
 	exports.default = _angular2.default.module('services.random-names', []).service('randomNames', RandomNames).name;
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4995,127 +5117,6 @@ webpackJsonp([0],[
 	}
 
 	exports.default = _angular2.default.module('directives.greeting', []).directive('greeting', greeting).name;
-
-/***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	jsr.$inject = ["jsrMocks", "$q", "$rootScope"];
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; }; /* globals window, Visualforce */
-
-
-	var _angular = __webpack_require__(1);
-
-	var _angular2 = _interopRequireDefault(_angular);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//if we can't find a specific jsr mock method
-	var genericMock = {
-	    method: function method(args) {
-	        alert('mock not implemented for ' + args[0]);
-	        console.error('mock not implemented for ', args);
-	    },
-	    timeout: 500 //half second
-	};
-
-	function jsrMocks() {
-	    var $mocks;
-	    var $mockServer;
-	    return {
-	        setMocks: function setMocks(mocks, mockServer) {
-	            $mocks = mocks;
-	            $mockServer = mockServer;
-	        },
-
-	        $get: ["$log", "$http", "$window", "$timeout", function $get($log, $http, $window, $timeout) {
-	            'ngInject';
-
-	            if (!window.Visualforce) {
-
-	                return {
-	                    remoting: {
-	                        Manager: {
-	                            invokeAction: invokeStaticAction
-	                        }
-	                    }
-	                };
-	            } else {
-	                return Visualforce;
-	            }
-
-	            function invokeStaticAction() {
-
-	                var lastArg = arguments[arguments.length - 1],
-	                    callback = lastArg,
-	                    mock = $mocks[arguments[0]] || genericMock,
-	                    result = mock.method(arguments),
-	                    event = {
-	                    status: true
-	                };
-
-	                if (mock.error) {
-	                    event.status = false;
-	                    event.message = mock.error;
-	                }
-
-	                if ((typeof callback === 'undefined' ? 'undefined' : _typeof(callback)) === 'object') {
-	                    callback = arguments[arguments.length - 2];
-	                }
-	                $timeout(function () {
-	                    callback(result, event);
-	                }, mock.timeout);
-	            }
-	        }]
-
-	    };
-	}
-
-	function jsr(jsrMocks, $q, $rootScope) {
-	    'ngInject';
-
-	    var Visualforce = jsrMocks;
-
-	    return function (request) {
-	        var deferred = $q.defer();
-
-	        var parameters = [request.method];
-
-	        if (request.args) {
-
-	            for (var i = 0; i < request.args.length; i++) {
-	                parameters.push(request.args[i]);
-	            }
-	        }
-	        var callback = function callback(result, event) {
-	            $rootScope.$apply(function () {
-	                if (event.status) {
-	                    deferred.resolve(result);
-	                } else {
-	                    deferred.reject(event);
-	                }
-	            });
-	        };
-
-	        parameters.push(callback);
-
-	        if (request.options) {
-	            parameters.push(request.options);
-	        }
-
-	        Visualforce.remoting.Manager.invokeAction.apply(Visualforce.remoting.Manager, parameters);
-
-	        return deferred.promise;
-	    };
-	}
-
-	exports.default = _angular2.default.module('jsrMocks', []).provider('jsrMocks', jsrMocks).factory('jsr', jsr).name;
 
 /***/ },
 /* 19 */
@@ -5147,7 +5148,7 @@ webpackJsonp([0],[
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(12)();
+	exports = module.exports = __webpack_require__(13)();
 	// imports
 
 

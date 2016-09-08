@@ -22,7 +22,10 @@ export default class HomeController {
 
       return this.jsr({ method: window.configSettings.remoteActions.getCards, args: [] })
           .then(cards => this.cards = cards )
-          .catch(error => console.error(error.message, error));
+          .catch(error => {
+              console.error(error.message, error);
+              alert(error.message);
+          });
   }
 
 }
