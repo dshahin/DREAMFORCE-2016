@@ -9,6 +9,7 @@ import routing from './app.config';
 import header from './components/header/header.directive';
 import card from './components/card/card.directive';
 import home from './features/home';
+//import jsr from './services/jsrMocks.service';
 
 
 angular.element(document).ready(() => {

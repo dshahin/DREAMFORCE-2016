@@ -39,6 +39,8 @@ webpackJsonp([0],[
 	__webpack_require__(19);
 	//TODO move to a core module to load all deps
 
+	//import jsr from './services/jsrMocks.service';
+
 
 	_angular2.default.element(document).ready(function () {
 	  _angular2.default.module('app', [_angularUiRouter2.default, _jsrMocks2.default, _header2.default, _home2.default, _card2.default]).config(_app2.default);
@@ -4667,7 +4669,7 @@ webpackJsonp([0],[
 	            $mockServer = mockServer;
 	        },
 
-	        $get: function $get($log, $http, $window, $timeout) {
+	        $get: function $get($timeout) {
 	            'ngInject';
 
 	            if (!window.Visualforce) {
