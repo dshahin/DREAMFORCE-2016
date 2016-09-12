@@ -4670,7 +4670,7 @@ webpackJsonp([0],[
 	        },
 
 	        $get: function $get($timeout) {
-	            'ngInject';
+	            "ngInject";
 
 	            if (!window.Visualforce) {
 
@@ -4713,7 +4713,7 @@ webpackJsonp([0],[
 	}
 
 	function jsr(jsrMocks, $q, $rootScope) {
-	    'ngInject';
+	    "ngInject";
 
 	    var Visualforce = jsrMocks;
 
