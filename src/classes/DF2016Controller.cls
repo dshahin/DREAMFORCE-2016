@@ -1,6 +1,6 @@
 public with sharing class DF2016Controller {
 
-	//get a supervisor's team
+	//get cards
     @ReadOnly
     @RemoteAction
     public static Card[] getCards() {
