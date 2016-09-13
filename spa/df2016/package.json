@@ -6,7 +6,7 @@
   "scripts": {
     "deploy": "webpack --config webpack.deploy.js",
     "production": "NODE_ENV=production webpack --config webpack.deploy.js -p",
-    "ci": "NODE_ENV=production webpack --config webpack.production.js",
+    "ci": "NODE_ENV=production webpack --config webpack.production.js -p",
     "server": "webpack-dev-server",
     "start": "./node_modules/.bin/npm-run-all --parallel server",
     "lint": "eslint src/",
