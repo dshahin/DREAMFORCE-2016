@@ -1,9 +1,9 @@
 var webpack = require('webpack');
 var copy = require('copy-webpack-plugin');
 var path = require('path');
-var autoprefixer = require('autoprefixer');
-var nginject = require('nginject-loader');
-var ngannotate = require('ng-annotate');
+//var autoprefixer = require('autoprefixer');
+//var nginject = require('nginject-loader');
+//var ngannotate = require('ng-annotate');
 var extractplugin = require('extract-text-webpack-plugin');
 //var extractstyle = new extractplugin('assets/[name].css');
 // This will make 'assets/app.css' because of the entry name.
@@ -40,7 +40,7 @@ module.exports = {
                 warnings: false
             }
         }),
-        //new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
         new extractplugin('assets/[name].css'),
         new copy([{
             from: './node_modules/@salesforce-ux/design-system/assets',
