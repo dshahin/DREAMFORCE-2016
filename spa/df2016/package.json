@@ -31,7 +31,7 @@
     "angular": "^1.5.8",
     "angular-ui-router": "^0.3.1",
     "jquery": "^3.1.0",
-    "jsr-mocks": "2.0.3",
+    "jsr-mocks": "2.0.4",
     "moment": "^2.14.1"
   },
   "devDependencies": {

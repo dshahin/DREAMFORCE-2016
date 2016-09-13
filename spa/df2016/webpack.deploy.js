@@ -49,7 +49,8 @@ module.exports = {
         new webpack.ProvidePlugin({
             '$': 'jquery',
             'jQuery': 'jquery',
-            'window.jQuery': 'jquery'
+            'window.jQuery': 'jquery',
+            'jsr' : 'jsr-mocks'
         }),
         new webpack.ProvidePlugin({
             'moment': 'moment'
