@@ -6,16 +6,17 @@ export default class HomeController {
         this.$log = $log;
         this.$scope = $scope;
         this.$log.debug('received get cards event', event);
-        this.getCards().then((cards)=>$log.log(`got ${cards.length} cards`, cards));
-    });
-    this.$scope.$on('clear-cards', (event) =>{
         this.cards = [];
-        this.matches = [];
+
+        this.$scope.$on('clear-cards', (event) =>{
+            this.cards = [];
+        });
         //setup event handler
         this.$scope.$on('get-cards', (event) => {
             this.$log.debug('received get cards event', event);
             this.getCards().then((cards) => $log.log(`got ${cards.length} cards`, cards));
         });
+
         this.$scope.$emit('get-cards');
     }
 
@@ -25,9 +26,7 @@ export default class HomeController {
                 method: window.configSettings.remoteActions.getCards
             })
             .then(cards => {
-                for (var card of cards) {
-                    this.cards.unshift(card);
-                }
+                this.cards = cards;
                 return cards;
             })
             .catch(error => {
