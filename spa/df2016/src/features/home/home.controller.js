@@ -1,6 +1,6 @@
 export default class HomeController {
 
-  constructor( jsr, $log, $scope, $rootScope) {
+  constructor( jsr, $log, $scope) {
     'ngInject';
     this.jsr = jsr;
     this.$log = $log;
@@ -15,10 +15,7 @@ export default class HomeController {
 
   getCards() {
       this.$log.log('getting cards...');
-      return this.jsr({
-        method: window.configSettings.remoteActions.getCards,
-        args: []
-      })
+      return this.jsr({method: window.configSettings.remoteActions.getCards})
       .then(cards => this.cards = cards )
       .catch(error => {
           this.$log.error(error.message, error);
