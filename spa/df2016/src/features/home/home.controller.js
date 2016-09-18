@@ -1,33 +1,31 @@
 export default class HomeController {
-  constructor(randomNames, jsr, $scope, $log) {
-    'ngInject';
-    this.random = randomNames;
-    this.name = 'World';
-    this.staticPath = window.configSettings.staticPath;
-    this.$scope = $scope;
-    this.$log = $log;
 
+  constructor( jsr, $log, $scope, $rootScope) {
+    'ngInject';
     this.jsr = jsr;
+    this.$log = $log;
+    this.$scope = $scope;
     this.cards = {};
-    this.$scope.$on('get-cards', (event, data) =>{
-        this.$log.debug('received get cards event');
-        this.getCards();
+    this.$scope.$on('get-cards', (event) =>{
+        this.$log.debug('received get cards event', event);
+        this.getCards().then((cards)=>$log.log(`got ${cards.length} cards`, cards));
     });
-    this.getCards();
+    this.$scope.$emit('get-cards');
   }
 
-
-
   getCards() {
+      this.$log.log('getting cards...');
+      return this.jsr({
+        method: window.configSettings.remoteActions.getCards,
+        args: []
+      })
+      .then(cards => this.cards = cards )
+      .catch(error => {
+          this.$log.error(error.message, error);
+          alert(error.message);
+          return [];
+      });
 
-      return this.jsr({ method: window.configSettings.remoteActions.getCards, args: [] })
-          .then(cards => this.cards = cards )
-          .catch(error => {
-              console.error(error.message, error);
-              alert(error.message);
-          });
   }
 
 }
-
-HomeController.$inject = ['randomNames', 'jsr', '$scope', '$log'];
