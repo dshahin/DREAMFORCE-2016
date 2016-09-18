@@ -20,11 +20,11 @@ window.configSettings = {
 //mock factory
 function getCards(){
     return {
-        timeout : 250,
-        products : [],
-        //error : 'Something unexpected happened...' ,
+        //error : 'there was an error' ,
         method : function(){
             var mock = this;
+            //mock.error = mock.error ? false : 'there was an error';
+            mock.products = [];
             mock.numberOfTiles = faker.random.number({'min': 1,'max': 3});
             for(var i=0; i< mock.numberOfTiles ;i++){
                 mock.products.unshift({
