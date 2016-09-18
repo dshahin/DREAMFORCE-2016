@@ -1,0 +1,27 @@
+<div class="slds-card">
+    <div class="slds-card__header slds-grid">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-media__figure" ng-click="getCards()">
+                <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
+                    <use xlink:href="" ng-href="{{staticPath}}/assets/icons/standard-sprite/svg/symbols.svg#contact"></use>
+                </svg>
+            </div>
+            <div class="slds-media__body">
+                <h2 class="slds-text-heading--small slds-truncate">{{card.motto}}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="slds-card__body">
+        <div class="slds-text-body--regular">
+            <img ng-src="{{card.image}}" width="100%" class="img-responsive" />
+            <div class="slds-p-around--medium">
+                <h2 class="slds-text-heading--medium slds-m-bottom--medium">
+                    <a ng-href="/{{card.id}}">{{ card.title }}</a>
+                </h2>
+                <h4 class="slds-text-heading--small slds-m-bottom--medium"> {{ card.summary }}</h4>
+                
+            </div>
+        </div>
+    </div>
+    <div class="slds-card__footer"><a href="#">View All <span class="slds-assistive-text">entity type</span></a></div>
+</div>

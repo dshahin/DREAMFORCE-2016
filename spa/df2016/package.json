@@ -13,7 +13,8 @@
     "mocha": "mocha --compilers js:babel-register ./src/**/*.test.js",
     "watch": "mocha --compilers js:babel-register -w ./src/**/*.test.js",
     "test": "npm run lint && npm run mocha",
-    "selenium": "webdriver-manager start"
+    "selenium": "webdriver-manager start",
+    "protractor": " npm run start && npm run selenium && protractor"
   },
   "repository": {
     "type": "git",
@@ -30,8 +31,8 @@
     "angular": "^1.5.8",
     "angular-ui-router": "^0.3.1",
     "jquery": "^3.1.0",
+    "jsr-mocks": "2.0.4",
     "moment": "^2.14.1"
-
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
@@ -39,6 +40,7 @@
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.1",
     "babel-loader": "^6.2.2",
+    "babel-plugin-syntax-decorators": "6.13.0",
     "babel-preset-es2015": "^6.5.0",
     "babel-register": "^6.5",
     "babel-runtime": "^6.5",
@@ -48,9 +50,6 @@
     "eslint": "^3.1.1",
     "eslint-config-defaults": "^9.0.0",
     "extract-text-webpack-plugin": "^1.0.1",
-    "faker": "^3.0.1",
-    "jsforce": "^1.5.1",
-    "jsforce-metadata-tools": "^1.2.0",
     "lodash": "^4.0.0",
     "mocha": "^2.4.5",
     "ng-annotate": "^1.2.1",
