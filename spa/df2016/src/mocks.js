@@ -13,14 +13,38 @@ window.configSettings = {
         getCards  : '{!$RemoteAction.DF2016Controller.getCards}',
     },
     mocks: {
-        '{!$RemoteAction.DF2016Controller.getCards}': getCards()
+        '{!$RemoteAction.DF2016Controller.getCards}': getCardsFaker()
     }
 };
 
+function getCardsStatic() {
+  return {
+    method : function(){
+      return [
+        {
+          "id": "a281511c-2bd5-402e-8565-e16bbcdd1d98",
+          "image": "http://lorempixel.com/640/480/city",
+          "title": "Recusandae alias perspiciatis reiciendis quia qui et totam autem.",
+          "motto": "Face to face responsive moderator",
+          "summary": "Consequatur provident itaque sit labore aut et voluptate ea. Accusantium laudantium at voluptatum alias quia. Perferendis nulla necessitatibus placeat non voluptatibus occaecati iusto. Et vel sint et optio et sit. Sunt rerum voluptas ut repellendus modi."
+        },
+        {
+          "id": "c4215d9f-e46a-4918-a426-8b4b65e9e5e8",
+          "image": "http://lorempixel.com/640/480/people",
+          "title": "Doloribus eum ut minus sit.",
+          "motto": "User-centric zero defect extranet",
+          "summary": "Excepturi dolores eveniet est iusto error natus minus. Dolores dolor tenetur alias sint exercitationem. Doloremque voluptates qui eius id ex beatae. Ut et officiis."
+        }
+      ];
+    }
+  }
+}
+
 //mock factory
-function getCards(){
+function getCardsFaker(){
     return {
         //error : 'there was an error' ,
+        timeout : 250,
         method : function(){
             var mock = this;
             //mock.error = mock.error ? false : 'there was an error';

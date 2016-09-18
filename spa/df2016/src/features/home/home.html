@@ -1,8 +1,8 @@
 <header name="Newell" foo="bar"></header>
 <div catalog class="catalog-container slds-grid slds-wrap">
-    <!-- <pre>{{home.products | json}}</pre> -->
     <div class="slds-col--padded slds-m-bottom--medium slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4"
         ng-repeat="card in home.cards">
         <card card="card"/>
     </div>
 </div>
+<pre>{{home.cards | json}}</pre>
