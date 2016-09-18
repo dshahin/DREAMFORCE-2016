@@ -1,4 +1,8 @@
-<header name="Newell" foo="bar"></header>
+<header ></header>
+<div>
+    <input type="text" id="autocomplete" ng-keyup="home.autocomplete($event)" placeholder="Start typing..."/>
+    <pre ng-show="home.matches.length > 1" >{{home.matches | json}}</pre>
+</div>
 <div catalog class="catalog-container slds-grid slds-wrap">
     <div class="slds-col--padded slds-m-bottom--medium slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4"
         ng-repeat="card in home.cards">

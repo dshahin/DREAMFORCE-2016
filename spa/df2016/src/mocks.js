@@ -11,12 +11,15 @@ window.configSettings = {
     },
     remoteActions: {
         getCards  : '{!$RemoteAction.DF2016Controller.getCards}',
+        autocomplete  : '{!$RemoteAction.DF2016Controller.autocomplete}',
     },
     mocks: {
-        '{!$RemoteAction.DF2016Controller.getCards}': getCardsFaker()
+        '{!$RemoteAction.DF2016Controller.getCards}': getCardsFaker(),
+        '{!$RemoteAction.DF2016Controller.autocomplete}': autocomplete(),
     }
 };
 
+//returns static json
 function getCardsStatic() {
   return {
     method : function(){
@@ -40,7 +43,7 @@ function getCardsStatic() {
   }
 }
 
-//mock factory
+//dynamic mock, generates random cards using faker.js
 function getCardsFaker(){
     return {
         //error : 'there was an error' ,
@@ -64,6 +67,31 @@ function getCardsFaker(){
 
         }
     };
+}
+
+//simulates autocomplete on server
+function autocomplete(){
+    return {
+        timeout : 1000,
+        error : false,
+        source : ['foo','bar','foobar','barney'],
+        method : function(query){
+            var mock = this;
+            var matches = [];
+            var q = query[1];
+            if(!q.length) return matches;
+            for(var i=0;i<mock.source.length;i++){
+                var possible = mock.source[i];
+                console.log(possible, q);
+                if(possible.indexOf(q) >= 0){
+                    matches.push(possible);
+                }
+            }
+            console.log('query',q);
+            console.log('matches',matches);
+            return matches;
+        }
+    }
 }
 
 
