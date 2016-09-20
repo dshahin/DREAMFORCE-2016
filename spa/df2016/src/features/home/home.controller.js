@@ -38,7 +38,10 @@ export default class HomeController {
     }
 
     autocomplete(event) {
-        var query = event.srcElement.value;
+        console.log('event',event);
+        var element = document.getElementById('autocomplete'),
+            query = element.value;
+        console.log('query',query);
         if (query.length >= 3) {
             this.jsr({
                 method: window.configSettings.remoteActions.autocomplete,
@@ -50,7 +53,7 @@ export default class HomeController {
             .then(results => {
                 this.matches = results;
                 if (this.matches.length === 1) {
-                    event.srcElement.value = this.matches[0];
+                    element.value = this.matches[0];
                 }
             })
             .catch(error => this.$log.error(error.message, error));
