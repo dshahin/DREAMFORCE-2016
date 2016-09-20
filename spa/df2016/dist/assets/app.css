@@ -1,1 +1,8 @@
-#home-header{text-align:center}
+#home-header {
+  text-align: center; }
+
+pre {
+  background-color: white; }
+
+div.cmd {
+  cursor: pointer; }

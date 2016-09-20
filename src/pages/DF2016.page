@@ -80,6 +80,7 @@
 
                 remoteActions: {
                     getCards : '{!$RemoteAction.DF2016Controller.getCards}',
+                    autocomplete  : '{!$RemoteAction.DF2016Controller.autocomplete}',
                 }
             }
         </script>
