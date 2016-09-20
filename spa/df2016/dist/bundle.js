@@ -5021,7 +5021,7 @@ webpackJsonp([0],[
 	        this.$log.debug('received get cards event', event);
 	        this.cards = [];
 
-	        this.$scope.$on('clear-cards', function (event) {
+	        this.$scope.$on('clear-cards', function () {
 	            _this.cards = [];
 	        });
 	        //setup event handler
@@ -5058,8 +5058,8 @@ webpackJsonp([0],[
 	            var _this3 = this;
 
 	            console.log('event', event);
-	            var element = document.getElementById('autocomplete'),
-	                query = element.value;
+	            var input = document.getElementById('autocomplete'),
+	                query = input.value;
 	            console.log('query', query);
 	            if (query.length >= 3) {
 	                this.jsr({
@@ -5071,7 +5071,7 @@ webpackJsonp([0],[
 	                }).then(function (results) {
 	                    _this3.matches = results;
 	                    if (_this3.matches.length === 1) {
-	                        element.value = _this3.matches[0];
+	                        input.value = _this3.matches[0];
 	                    }
 	                }).catch(function (error) {
 	                    return _this3.$log.error(error.message, error);

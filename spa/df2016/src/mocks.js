@@ -73,18 +73,18 @@ function getCardsFaker(){
 //simulates autocomplete on server
 function autocomplete(){
     return {
-        timeout : 1000,
+        timeout : 100,
         error : false,
-        source : ['foo','bar','foobar','barney'],
+        source : ['foo','bar','foobar','Barney Fife'],
         method : function(query){
             var mock = this;
             var matches = [];
-            var q = query[1];
+            var q = query[1].toLowerCase();
             if(!q.length) return matches;
             for(var i=0;i<mock.source.length;i++){
                 var possible = mock.source[i];
                 console.log(possible, q);
-                if(possible.indexOf(q) >= 0){
+                if(possible.toLowerCase().indexOf(q) >= 0){
                     matches.push(possible);
                 }
             }

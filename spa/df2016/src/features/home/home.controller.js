@@ -8,7 +8,7 @@ export default class HomeController {
         this.$log.debug('received get cards event', event);
         this.cards = [];
 
-        this.$scope.$on('clear-cards', (event) =>{
+        this.$scope.$on('clear-cards', () =>{
             this.cards = [];
         });
         //setup event handler
@@ -39,8 +39,8 @@ export default class HomeController {
 
     autocomplete(event) {
         console.log('event',event);
-        var element = document.getElementById('autocomplete'),
-            query = element.value;
+        var input = document.getElementById('autocomplete'),
+            query = input.value;
         console.log('query',query);
         if (query.length >= 3) {
             this.jsr({
@@ -53,7 +53,7 @@ export default class HomeController {
             .then(results => {
                 this.matches = results;
                 if (this.matches.length === 1) {
-                    element.value = this.matches[0];
+                    input.value = this.matches[0];
                 }
             })
             .catch(error => this.$log.error(error.message, error));
