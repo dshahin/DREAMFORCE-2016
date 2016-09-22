@@ -14,7 +14,7 @@ window.configSettings = {
         autocomplete  : '{!$RemoteAction.DF2016Controller.autocomplete}',
     },
     mocks: {
-        '{!$RemoteAction.DF2016Controller.getCards}': getCardsFaker(),
+        '{!$RemoteAction.DF2016Controller.getCards}': getCardsStatic(),
         '{!$RemoteAction.DF2016Controller.autocomplete}': autocomplete(),
     }
 };
