@@ -68,7 +68,7 @@
     function getCardsFaker() {
         return {
             //error : 'there was an error' ,
-            timeout: 250,
+            timeout: 100,
             products: [],
             method: function() {
                 var mock = this;
@@ -97,9 +97,9 @@
     //simulates autocomplete on server
     function autocomplete() {
         return {
-            timeout: 100,
+            timeout: 250,
             error: false,
-            source: ['foo', 'bar', 'foobar', 'Barney Fife'],
+            source: ['foo', 'bar', 'foobar', 'Barney Fife', 'Barney Miller'],
             method: function(query) {
                 var mock = this;
                 var matches = [];
