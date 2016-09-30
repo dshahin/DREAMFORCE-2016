@@ -34,16 +34,15 @@ webpackJsonp([0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// TODO: this should work
-	// import './main.scss';
 	__webpack_require__(18);
-	//TODO move to a core module to load all deps
 
-	//import jsr from './services/jsrMocks.service';
+	//import toastr from 'toastr';
 
 
 	_angular2.default.element(document).ready(function () {
-	  _angular2.default.module('app', [_angularUiRouter2.default, _jsrMocks2.default, _header2.default, _home2.default, _card2.default]).config(_app2.default);
+	  _angular2.default.module('app', [_angularUiRouter2.default, _jsrMocks2.default, _header2.default, _home2.default, _card2.default])
+	  //.constant('toastr',toastr)
+	  .config(_app2.default);
 
 	  _angular2.default.bootstrap(document, ['app']);
 	});
@@ -4815,7 +4814,7 @@ webpackJsonp([0],[
 /* 8 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"slds-page-header\" role=\"banner\">\n    <div class=\"slds-grid\">\n        <div class=\"slds-media__figure\">\n            <img ng-src=\"{{header.staticPath}}/assets/images/avatar1.jpg\" style=\"height:100px;\" alt=\"Placeholder\" />\n        </div>\n        <div class=\"slds-col slds-has-flexi-truncate\">\n            <p class=\"slds-text-heading--label\">Store</p>\n            <div class=\"slds-grid\">\n                <div class=\"slds-grid slds-type-focus slds-no-space\">\n                    <h1 class=\"slds-text-heading--medium slds-truncate\" title=\"My Leads (truncates)\">hey now</h1>\n                </div>\n            </div>\n        </div>\n        <div class=\"slds-col slds-no-flex slds-align-bottom\">\n            <div class=\"slds-grid\">\n                <div class=\"slds-button-group\" role=\"group\">\n                    <button class=\"cmd\" ng-click=\"$emit('get-cards')\">Get More cards</button>\n                    <button class=\"cmd\" ng-click=\"$emit('clear-cards')\">Clear Cards</button>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
+	module.exports = "<div class=\"slds-page-header\" role=\"banner\">\n    <div class=\"slds-grid\">\n        <div class=\"slds-media__figure\">\n            <img ng-src=\"{{header.staticPath}}/assets/images/avatar1.jpg\" style=\"height:100px;\" alt=\"Placeholder\" />\n        </div>\n        <div class=\"slds-col slds-has-flexi-truncate\">\n            <p class=\"slds-text-heading--label\">jsr-mocks demo</p>\n            <div class=\"slds-grid\">\n                <div class=\"slds-grid slds-type-focus slds-no-space\">\n                    <h1 class=\"slds-text-heading--medium slds-truncate\" title=\"My Leads (truncates)\">hey now</h1>\n                </div>\n            </div>\n        </div>\n        <div class=\"slds-col slds-no-flex slds-align-bottom\">\n            <div class=\"slds-grid\">\n                <div class=\"slds-button-group\" role=\"group\">\n                    <button class=\"cmd\" ng-click=\"$emit('get-cards')\">Get More cards</button>\n                    <button class=\"cmd\" ng-click=\"$emit('clear-cards')\">Clear Cards</button>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ },
 /* 9 */
@@ -5008,7 +5007,7 @@ webpackJsonp([0],[
 
 	var HomeController = function () {
 	    HomeController.$inject = ["jsr", "$log", "$scope"];
-	    function HomeController(jsr, $log, $scope) {
+	    function HomeController(jsr, $log, $scope /*,toastr*/) {
 	        'ngInject';
 
 	        var _this = this;
@@ -5020,6 +5019,7 @@ webpackJsonp([0],[
 	        this.$scope = $scope;
 	        this.$log.debug('received get cards event', event);
 	        this.cards = [];
+	        // this.toastr = toastr;
 
 	        this.$scope.$on('clear-cards', function () {
 	            _this.cards = [];
@@ -5033,6 +5033,7 @@ webpackJsonp([0],[
 	        });
 
 	        this.$scope.$emit('get-cards');
+	        // this.toastr.success('hey now');
 	    }
 
 	    _createClass(HomeController, [{
@@ -5049,6 +5050,7 @@ webpackJsonp([0],[
 	            }).catch(function (error) {
 	                _this2.$log.error(error.message, error);
 	                alert(error.message);
+	                //this.toastr.error(error.message);
 	                return [];
 	            });
 	        }

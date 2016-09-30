@@ -1,12 +1,13 @@
 export default class HomeController {
 
-    constructor(jsr, $log, $scope) {
+    constructor(jsr, $log, $scope /*,toastr*/) {
         'ngInject';
         this.jsr = jsr;
         this.$log = $log;
         this.$scope = $scope;
         this.$log.debug('received get cards event', event);
         this.cards = [];
+        // this.toastr = toastr;
 
         this.$scope.$on('clear-cards', () =>{
             this.cards = [];
@@ -18,6 +19,8 @@ export default class HomeController {
         });
 
         this.$scope.$emit('get-cards');
+        // this.toastr.success('hey now');
+
     }
 
     getCards() {
@@ -32,6 +35,7 @@ export default class HomeController {
             .catch(error => {
                 this.$log.error(error.message, error);
                 alert(error.message);
+                //this.toastr.error(error.message);
                 return [];
             });
 
