@@ -8,6 +8,13 @@ private class DF2016Test {
 		system.assertEquals(3, cards.size());
 	}
 
+	@isTest static void test_autocomplete() {
+		Test.startTest();
+		String[] matches = DF2016Controller.autocomplete('foo');
+		Test.stopTest();
+		system.assertEquals(0, matches.size());
+	}
+
 	@testSetup public static void setupTestData() {
 		Card__c[] cards = new Card__c[]{
 			new Card__C(
