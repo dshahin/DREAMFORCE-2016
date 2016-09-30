@@ -51,7 +51,8 @@ export default class HomeController {
                 method: window.configSettings.remoteActions.autocomplete,
                 args: [query],
                 options: {
-                    buffer: false
+                    buffer: false,
+                    escape: true
                 }
             })
             .then(results => {

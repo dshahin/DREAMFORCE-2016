@@ -99,7 +99,31 @@
         return {
             timeout: 250,
             error: false,
-            source: ['foo', 'bar', 'foobar', 'Barney Fife', 'Barney Miller'],
+            source: [
+              "Rose Gonzalez",
+              "Sean Forbes",
+              "Jack Rogers",
+              "Pat Stumuller",
+              "Andy Young",
+              "Tim Barr",
+              "John Bond",
+              "Stella Pavlova",
+              "Lauren Boyle",
+              "Babara Levy",
+              "Josh Davis",
+              "Jane Grey",
+              "Arthur Song",
+              "Ashley James",
+              "Tom Ripley",
+              "Liz D'Cruz",
+              "Edna Frank",
+              "Avi Green",
+              "Siddartha Nedaerk",
+              "Jake Llorrac",
+              "Daniel Shahin",
+              "Marc Benioff",
+              "David Benioff"
+            ],
             method: function(query) {
                 var mock = this;
                 var matches = [];

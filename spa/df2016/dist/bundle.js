@@ -5068,7 +5068,8 @@ webpackJsonp([0],[
 	                    method: window.configSettings.remoteActions.autocomplete,
 	                    args: [query],
 	                    options: {
-	                        buffer: false
+	                        buffer: false,
+	                        escape: true
 	                    }
 	                }).then(function (results) {
 	                    _this3.matches = results;
