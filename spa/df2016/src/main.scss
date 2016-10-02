@@ -2,7 +2,12 @@
 //@import "node_modules/toastr/toastr.scss";
 body {
   background-color: #DDEAFA;
+  font-size: 24px;
 }
+
+input{font-size:36px;}
+
+::-webkit-input-placeholder { color: plum; font-size: 36px;}
 
 .catalog-container {
     height: 100%;

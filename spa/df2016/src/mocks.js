@@ -14,7 +14,7 @@
             autocomplete: '{!$RemoteAction.DF2016Controller.autocomplete}',
         },
         mocks: {
-            '{!$RemoteAction.DF2016Controller.getCards}': getCardsStatic(),
+            '{!$RemoteAction.DF2016Controller.getCards}': getCardsFaker(),
             '{!$RemoteAction.DF2016Controller.autocomplete}': autocomplete(),
         }
     };
@@ -131,7 +131,6 @@
                 if (!q.length) return matches;
                 for (var i = 0; i < mock.source.length; i++) {
                     var possible = mock.source[i];
-                    console.log(possible, q);
                     if (possible.toLowerCase().indexOf(q) >= 0) {
                         matches.push(possible);
                     }

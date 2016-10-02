@@ -42,10 +42,10 @@ export default class HomeController {
     }
 
     autocomplete(event) {
-        console.log('event',event);
+        //console.debug('event',event);
         var input = document.getElementById('autocomplete'),
             query = input.value;
-        console.log('query',query);
+
         if (query.length >= 3) {
             this.jsr({
                 method: window.configSettings.remoteActions.autocomplete,
