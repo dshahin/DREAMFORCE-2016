@@ -67,4 +67,10 @@ export default class HomeController {
         }
     }
 
+    selectContact(name){
+        var input = document.getElementById('autocomplete');
+        input.value = name;
+        this.matches = [];
+    }
+
 }

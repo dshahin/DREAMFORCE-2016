@@ -1,7 +1,24 @@
 <header ></header>
-<div>
-    <input type="text" id="autocomplete" ng-keyup="home.autocomplete($event)" placeholder="Search Contacts..."/>
-    <pre ng-show="home.matches.length > 1" >{{home.matches | json}}</pre>
+<div class="slds-form-element slds-lookup" data-select="single" >
+    <input type="text" id="autocomplete" ng-keyup="home.autocomplete($event)" class="slds-lookup__search-input slds-input" placeholder="Search Contacts..."/>
+
+    <div class="slds-lookup__menu" id="lookup-330" ng-show="home.matches.length">
+    <div class="slds-lookup__item--label slds-text-body--small" ng-show="home.matches.length">Matched Contacts</div>
+    <ul class="slds-lookup__list" role="listbox">
+      <li role="presentation" class="automatch" ng-repeat="con in home.matches" >
+        <span class="slds-lookup__item-action slds-media slds-media--center" role="option" ng-click="home.selectContact(con)">
+          <svg aria-hidden="true" class="slds-icon slds-icon-standard-account slds-icon--small slds-media__figure">
+            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+          </svg>
+          <div class="slds-media__body" >
+            <div class="slds-lookup__result-text">{{con}}</div>
+            <span class="slds-lookup__result-meta slds-text-body--small">Contact • Dreamforce</span>
+          </div>
+        </span>
+      </li>
+
+    </ul>
+  </div>
 </div>
 <div catalog class="catalog-container slds-grid slds-wrap">
     <div class="slds-col--padded slds-m-bottom--medium slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4"

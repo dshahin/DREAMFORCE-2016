@@ -5,9 +5,9 @@ body {
   font-size: 24px;
 }
 
-input{font-size:36px;}
+::-webkit-input-placeholder { color: plum; font-size: 24px;}
 
-::-webkit-input-placeholder { color: plum; font-size: 36px;}
+li.automatch:hover{background-color: lightyellow;}
 
 .catalog-container {
     height: 100%;
