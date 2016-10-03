@@ -7,8 +7,8 @@
     <ul class="slds-lookup__list" role="listbox">
       <li role="presentation" class="automatch" ng-repeat="con in home.matches" >
         <span class="slds-lookup__item-action slds-media slds-media--center" role="option" ng-click="home.selectContact(con)">
-          <svg aria-hidden="true" class="slds-icon slds-icon-standard-account slds-icon--small slds-media__figure">
-            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+          <svg aria-hidden="true" class="slds-icon slds-icon-standard-account slds-icon--large slds-media__figure">
+            <use xlink:href="" ng-href="{{home.staticPath}}/assets/icons/standard-sprite/svg/symbols.svg#people"></use>
           </svg>
           <div class="slds-media__body" >
             <div class="slds-lookup__result-text">{{con}}</div>

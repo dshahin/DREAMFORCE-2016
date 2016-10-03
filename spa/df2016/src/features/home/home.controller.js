@@ -7,6 +7,8 @@ export default class HomeController {
         this.$scope = $scope;
         this.$log.debug('received get cards event', event);
         this.cards = [];
+        this.matches = [];
+        this.staticPath = configSettings.staticPath;
         // this.toastr = toastr;
 
         this.$scope.$on('clear-cards', () =>{
@@ -59,6 +61,7 @@ export default class HomeController {
                 this.matches = results;
                 if (this.matches.length === 1) {
                     input.value = this.matches[0];
+                    this.matches = [];
                 }
             })
             .catch(error => this.$log.error(error.message, error));

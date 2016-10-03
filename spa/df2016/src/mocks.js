@@ -27,35 +27,35 @@
                 return [{
                     "created": "9/8/2016 2:48 PM",
                     "id": "a005000000g8YFHAA2",
-                    "image": "http://bergenlinen.com/wp-content/uploads/2012/05/Spa.jpg",
-                    "motto": "Look at me",
+                    "image": "http://www.hijinxcomics.com/images/rocketeer.jpg",
+                    "motto": "Fortune favors the bold",
                     "summary": "This is a summary...",
-                    "title": "Foobar"
+                    "title": "The Rocketeer"
                 }, {
                     "created": "7/12/2016 8:15 PM",
                     "id": "a005000000eRakFAAS",
-                    "image": "http://blueauraspa.com/wp-content/uploads/2015/01/Dollarphotoclub_55997552.jpg",
-                    "motto": "This is the default motto",
+                    "image": "http://www.hijinxcomics.com/images/reidfleming.jpg",
+                    "motto": "I thought I told you to shut up",
                     "summary": "Now is the time for all good men to come to the aid of their country.",
-                    "title": "Fun in the sun"
+                    "title": "Reid Fleming"
                 }, {
                     "created": "7/12/2016 5:39 PM",
                     "id": "a005000000eRaNxAAK",
-                    "image": "http://bergenlinen.com/wp-content/uploads/2012/05/Spa.jpg",
-                    "motto": "This is the default motto",
+                    "image": "http://www.hijinxcomics.com/images/rory_mosaic.png",
+                    "motto": "Live free or die",
                     "summary": "This is a summary...",
-                    "title": "Card number three"
+                    "title": "Rory Root"
                 }, {
                     "created": "7/12/2016 5:08 PM",
                     "id": "a005000000eRVAQAA4",
-                    "image": "http://bergenlinen.com/wp-content/uploads/2012/05/Spa.jpg",
+                    "image": "http://www.hijinxcomics.com/images/robertculp.jpg",
                     "motto": "Totally different motto",
                     "summary": "Now is the time for all good men to come to the aid of their country.",
                     "title": "this is another card"
                 }, {
                     "created": "7/12/2016 5:07 PM",
                     "id": "a005000000eRVALAA4",
-                    "image": "http://blueauraspa.com/wp-content/uploads/2015/01/Dollarphotoclub_55997552.jpg",
+                    "image": "http://www.hijinxcomics.com/images/unclescrooge.jpg",
                     "motto": "This is the default motto",
                     "summary": "This is a summary...",
                     "title": "This is a card"
@@ -100,29 +100,29 @@
             timeout: 250,
             error: false,
             source: [
-              "Rose Gonzalez",
-              "Sean Forbes",
-              "Jack Rogers",
-              "Pat Stumuller",
-              "Andy Young",
-              "Tim Barr",
-              "John Bond",
-              "Stella Pavlova",
-              "Lauren Boyle",
-              "Babara Levy",
-              "Josh Davis",
-              "Jane Grey",
-              "Arthur Song",
-              "Ashley James",
-              "Tom Ripley",
-              "Liz D'Cruz",
-              "Edna Frank",
-              "Avi Green",
-              "Siddartha Nedaerk",
-              "Jake Llorrac",
-              "Daniel Shahin",
-              "Marc Benioff",
-              "David Benioff"
+                "Rose Gonzalez",
+                "Sean Forbes",
+                "Jack Rogers",
+                "Pat Stumuller",
+                "Andy Young",
+                "Tim Barr",
+                "John Bond",
+                "Stella Pavlova",
+                "Lauren Boyle",
+                "Babara Levy",
+                "Josh Davis",
+                "Jane Grey",
+                "Arthur Song",
+                "Ashley James",
+                "Tom Ripley",
+                "Liz D'Cruz",
+                "Edna Frank",
+                "Avi Green",
+                "Siddartha Nedaerk",
+                "Jake Llorrac",
+                "Daniel Shahin",
+                "Marc Benioff",
+                "David Benioff"
             ],
             method: function(query) {
                 var mock = this;
