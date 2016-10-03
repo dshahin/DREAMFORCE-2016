@@ -28,7 +28,8 @@ export default class HomeController {
     getCards() {
         this.$log.log('getting cards...');
         return this.jsr({
-                method: window.configSettings.remoteActions.getCards
+                method: window.configSettings.remoteActions.getCards,
+                options: {escape:false}
             })
             .then(cards => {
                 this.cards = cards;

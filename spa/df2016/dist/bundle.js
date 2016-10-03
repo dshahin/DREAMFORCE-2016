@@ -5045,7 +5045,8 @@ webpackJsonp([0],[
 
 	            this.$log.log('getting cards...');
 	            return this.jsr({
-	                method: window.configSettings.remoteActions.getCards
+	                method: window.configSettings.remoteActions.getCards,
+	                options: { escape: false }
 	            }).then(function (cards) {
 	                _this2.cards = cards;
 	                return cards;

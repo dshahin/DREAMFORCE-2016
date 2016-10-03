@@ -49,7 +49,7 @@
                     "created": "7/12/2016 5:08 PM",
                     "id": "a005000000eRVAQAA4",
                     "image": "http://www.hijinxcomics.com/images/robertculp.jpg",
-                    "motto": "What&#39;s the scenario?",
+                    "motto": "What's the scenario?",
                     "summary": "Now is the time for all good men to come to the aid of their country.",
                     "title": "Bill Maxwell"
                 }];
