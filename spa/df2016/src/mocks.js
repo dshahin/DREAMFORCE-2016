@@ -41,24 +41,17 @@
                 }, {
                     "created": "7/12/2016 5:39 PM",
                     "id": "a005000000eRaNxAAK",
-                    "image": "http://www.hijinxcomics.com/images/rory_mosaic.png",
+                    "image": "http://www.hijinxcomics.com/images/unclescrooge.jpg",
                     "motto": "Live free or die",
                     "summary": "This is a summary...",
-                    "title": "Rory Root"
+                    "title": "Uncle Scrooge"
                 }, {
                     "created": "7/12/2016 5:08 PM",
                     "id": "a005000000eRVAQAA4",
                     "image": "http://www.hijinxcomics.com/images/robertculp.jpg",
-                    "motto": "Totally different motto",
+                    "motto": "What&#39;s the scenario?",
                     "summary": "Now is the time for all good men to come to the aid of their country.",
-                    "title": "this is another card"
-                }, {
-                    "created": "7/12/2016 5:07 PM",
-                    "id": "a005000000eRVALAA4",
-                    "image": "http://www.hijinxcomics.com/images/unclescrooge.jpg",
-                    "motto": "This is the default motto",
-                    "summary": "This is a summary...",
-                    "title": "This is a card"
+                    "title": "Bill Maxwell"
                 }];
             }
         }
