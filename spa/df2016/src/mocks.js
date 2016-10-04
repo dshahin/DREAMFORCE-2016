@@ -22,7 +22,7 @@
     //returns static json
     function getCardsStatic() {
         return {
-            error: false,
+            //error: "Something is not right...",
             method: function() {
                 return [{
                     "created": "9/8/2016 2:48 PM",
