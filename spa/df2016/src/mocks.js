@@ -14,7 +14,7 @@
             autocomplete: '{!$RemoteAction.DF2016Controller.autocomplete}',
         },
         mocks: {
-            '{!$RemoteAction.DF2016Controller.getCards}': getCardsStatic(),
+            '{!$RemoteAction.DF2016Controller.getCards}': getCardsFaker(),
             '{!$RemoteAction.DF2016Controller.autocomplete}': autocomplete(),
         }
     };
@@ -60,7 +60,7 @@
     //dynamic mock, generates random cards using faker.js
     function getCardsFaker() {
         return {
-            //error : 'there was an error' ,
+            error : 'there was an error' ,
             timeout: 100,
             products: [],
             method: function() {
@@ -91,7 +91,7 @@
     function autocomplete() {
         return {
             timeout: 250,
-            error: false,
+            //error: true,
             source: [
                 "Rose Gonzalez",
                 "Sean Forbes",

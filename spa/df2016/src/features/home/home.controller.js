@@ -1,6 +1,6 @@
 export default class HomeController {
 
-    constructor(jsr, $log, $scope /*,toastr*/) {
+    constructor(jsr, $log, $scope ,toastr) {
         'ngInject';
         this.jsr = jsr;
         this.$log = $log;
@@ -9,7 +9,7 @@ export default class HomeController {
         this.cards = [];
         this.matches = [];
         this.staticPath = configSettings.staticPath;
-        // this.toastr = toastr;
+         this.toastr = toastr;
 
         this.$scope.$on('clear-cards', () =>{
             this.cards = [];
@@ -21,7 +21,7 @@ export default class HomeController {
         });
 
         this.$scope.$emit('get-cards');
-        // this.toastr.success('hey now');
+        this.toastr.success('hey now');
 
     }
 
@@ -37,8 +37,8 @@ export default class HomeController {
             })
             .catch(error => {
                 this.$log.error(error.message, error);
-                alert(error.message);
-                //this.toastr.error(error.message);
+                //alert(error.message);
+                this.toastr.error(error.message);
                 return [];
             });
 
@@ -55,7 +55,7 @@ export default class HomeController {
                 args: [query],
                 options: {
                     buffer: false,
-                    escape: true
+                    escape: false
                 }
             })
             .then(results => {
