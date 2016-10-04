@@ -8,4 +8,9 @@
 # Turbocharge your workflow
 ## with node.js and offline development tools
 
+## install dependencies
+`npm install`
+## run offline
+`npm run start`
+
 ![turbocharger](https://cloud.githubusercontent.com/assets/933826/17073285/3f89e87e-5024-11e6-9dd1-ab9f2b5f9d59.jpg)
